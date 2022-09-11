@@ -68,9 +68,12 @@ E_Liquidos_I = Estanque(24, ["Inerte, Liquida, Gas, Inflamable"], []) #Contenedo
 
 def readcsv (x):
     with open(x, 'r') as c:
-        csv = c.read().splitlines()
-        return csv
+        reader = csv.reader(c)
+        lst = list(reader)
+        print(lst)
+
 
 if __name__ == "__main__":
-    csv = readcsv("Lista.csv")
+    readcsv("Lista.csv")
+"""     main(csv) """
 
