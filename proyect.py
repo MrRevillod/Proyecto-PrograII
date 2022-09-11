@@ -73,6 +73,26 @@ def readcsv (x):
         lista = list(line)
         return lista 
 
+class Producto:
+    def __init__(self,id, nombre, tipo, masa, peso):
+
+        self.id = id
+        self.nombre = nombre
+        self.tipo = tipo
+        self.masa = masa
+        self.peso = peso
+
+    
+    def __str__(self):
+        return f"ID: {self.id}, Nombre: {self.nombre}, Tipo: {self.tipo}, Masa: {self.masa}, Peso: {self.peso}"
+
+
+
+
+
+
+
+
 def Extraer_Peso(csv):
     for x in csv:
         for y in x:
@@ -100,3 +120,4 @@ def Encontrar_Rentabilidad():
 
 if __name__ == "__main__":
     Encontrar_Rentabilidad()
+    Producto.main(readcsv("Lista.csv"))
