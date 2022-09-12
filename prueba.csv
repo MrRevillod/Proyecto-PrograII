@@ -1,2 +1,5 @@
 1,planchas_cobre,normal,solida,20000
 2,planchas_plata,normal,inerte,10000
+3,agua,normal,liquido,100000
+4,planchas_oro,refrigerada,solida,10000
+5,planchas_plata,refrigerada,inerte,20000
