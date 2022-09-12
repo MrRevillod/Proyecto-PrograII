@@ -1,47 +1,37 @@
 from dataclasses import dataclass
 
 @dataclass
-class Barco:
-    costo: int = 1000000000
-    capacidad: int = 24000
+class Producto :
+    id: int
+    nombre: str
+    tipo: str
+    masa: str
+    peso: int
 
 @dataclass
-class Contenedor_NP:
-    capacidad: int = 12000
-    tipo = "normal"
-    carga = ["solida"]
-    productos  = []
+class Vehículo:
+    costo: int
+    capacidad: int
 
 @dataclass
-class Contenedor_NG:
-    capacidad: int = 24000
-    tipo = "normal"
-    carga = ["solida"]
-    productos  = []
+class Contenedores:
+    carga: int
+    tipo: str
+    masa: list
+    prod: list
 
-@dataclass
-class Contenedor_RG:
-    capacidad: int = 20000
-    tipo = "refrigerada"
-    carga = ["solida", "normal", "liquido"]
-    productos = []
+# Vehiculos
 
-@dataclass
-class Contenedor_RP:
-    capacidad: int = 10000
-    tipo = "refrigerada"
-    carga = ["solida", "normal", "liquido"]
-    productos = []
+Barco = Vehículo(1000000000, 24000)
+Tren = Vehículo(10000000, 250)
+Avión = Vehículo(1000000, 10)
+Camión = Vehículo(500000, 1)
 
-@dataclass
-class Estanque:
-    capacidad: int = 100000
-    tipo = "normal"
-    carga = ["Gas", "liquido"]
-    productos  = []
+# Contenedores
 
-@dataclass
-class Estanque_I:
-    capacidad: int = 100000
-    tipo = "inflamable"
-    carga = ["gas", "liquido"]
+C_np  = Contenedores(12000, "normal", ["normal","inerte","sólida"], [])
+C_ng  = Contenedores(24000, "normal", ["normal","inerte","sólida"], [])
+C_rp  = Contenedores(10000, "refrigerado", ["normal","refrigerada","inerte","sólida"], [])
+C_rg  = Contenedores(20000, "refrigerado", ["normal","refrigerada","inerte", "sólida"], [])
+C_el  = Contenedores(24000, "líquidos", ["inerte","líquida","gas"], [])
+C_eli = Contenedores(20000, "líq.inflamable", ["inerte","inflamable","líquida","gas"], [])
