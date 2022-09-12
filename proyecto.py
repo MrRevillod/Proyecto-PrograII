@@ -5,18 +5,16 @@ from classes import *
 
 @dataclass
 class Producto :
-    id: int
-    nombre: str
-    tipo: str
-    masa: str
-    peso: int
+
+    id: int ; nombre: str ; tipo: str
+    masa: str ; peso: int
 
 def csvx (x):
     with open(x, 'r') as c:
         line = csv.reader(c)
         lista = list(line)
         array = []
-        
+
         for i in lista:
             id = int(i[0]) ; nombre = i[1] ; tipo = i[2]
             masa = i[3]    ; peso = int(i[4])
