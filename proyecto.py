@@ -88,24 +88,24 @@ def Enlistar_Contenedores(lista):
     print(f"La cantidad total de contenedores es: {Cant_total}")
     return Cant_total
 
-def Contar_Vehiculos():
-    Total_Vehículos = Barco.cantidad+Tren.cantidad+Avión.cantidad+Camión.cantidad
-    print(f"La cantidad total de vehículos es: {Total_Vehículos}")
-    print(f"Se deben usar {Barco.cantidad} barcos")
-    print(f"Se deben usar {Tren.cantidad} tren")
-    print(f"Se deben usar {Avión.cantidad} aviones")
-    print(f"Se deben usar {Camión.cantidad} camiones")
-
 def Rentabilidad_cont_por_Vehiculo(total_containt):
-
+    # Se saca la rentabilidad para cada vehículo en base a la cantidad
+    # total de contenedores
     Valor_Barco  = Barco.costo // (Barco.capacidad //total_containt)
     Valor_Tren   = Tren.costo  // (Tren.capacidad  //total_containt)
     Valor_Avión  = Avión.costo // (Avión.capacidad //total_containt)
     Valor_Camión = Camión.costo// (Camión.capacidad//total_containt)
 
     Vehículo_Óptimo = []
+    # lleva el id con su nombre y el valor para saber cual es el
+    # vehículo mas rentable
+
     matrix = [["Barco",Valor_Barco],["Tren",Valor_Tren]
                         ,["Avión",Valor_Avión],["Camión",Valor_Camión]]
+    # recorre la "matrix" verificando el menor valor posible iterando
+    # la rentabilidad de cada vehículo, esto lo hace con el valor del
+    # vehículo actual(x) y el valor del siguiente vehículo(x+1). 
+    # Por ultimo lo agrega a la lista Vehículo_Óptimo
     for x in range(len(matrix)):
         if (x+2) <= len(matrix):
             if matrix[x][1] <= matrix[x+1][1]:
@@ -113,9 +113,11 @@ def Rentabilidad_cont_por_Vehiculo(total_containt):
                 Vehículo_Óptimo.append(tupla)
 
         else: break
-    
+    # Cuando el vehículo óptimo concide con el tipo de barco, primero
+    # le suma 1 a la cantidad de vehículos de ese tipo, luego imprime
+    # el costo del vehículo en específico y por último suma ese costo
+    # a el valor total de todo el transporte
     Costo_Total_Transporte = 0
-
     if Vehículo_Óptimo[-1][0] == "Barco":
         Barco.cantidad += 1
         print(f"El total de transporte en barcos es: ${Barco.costo}")
@@ -132,23 +134,20 @@ def Rentabilidad_cont_por_Vehiculo(total_containt):
         Camión.cantidad += 1
         print(f"El total de transporte en camiones es: ${Camión.costo}")
         Costo_Total_Transporte += Camión.costo
-    print(f"El costo total de transporte es: ${Costo_Total_Transporte}")
-
     print(f"costo para el barco  es: ${Valor_Barco} ")
     print(f"costo para el tren   es: ${Valor_Tren}  ")
     print(f"costo para el avión  es: ${Valor_Avión} ")
     print(f"costo para el camión es: ${Valor_Camión}")
-    # print(f"El vehículo más óptimo es el: {Vehículo_Óptimo[-1][0]}")
+    print(f"El costo total de transporte es: ${Costo_Total_Transporte}")
 
-
-def Total_Transporte():
-
-
-    pass
-
-def Procesar_Contenedores(total_containt):
-
-    pass
+def Contar_Vehiculos():
+    # Se imprimen la cantidad de vehículos en particular y en conjunto total
+    Total_Vehículos = Barco.cantidad+Tren.cantidad+Avión.cantidad+Camión.cantidad
+    print(f"La cantidad total de vehículos es: {Total_Vehículos}")
+    print(f"Se deben usar {Barco.cantidad} barcos")
+    print(f"Se deben usar {Tren.cantidad} tren")
+    print(f"Se deben usar {Avión.cantidad} aviones")
+    print(f"Se deben usar {Camión.cantidad} camiones")
 
 # no se instancia la clase Producto() como objeto producto y tampoco de Vehiculos()
 
