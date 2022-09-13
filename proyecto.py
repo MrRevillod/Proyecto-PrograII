@@ -13,49 +13,68 @@ def csvx (x):
     with open(x, 'r') as c:
         line = csv.reader(c)
         lista = list(line)
-        array = []
+        productos = []
 
         for i in lista:
             id = int(i[0]) ; nombre = i[1] ; tipo = i[2]
             masa = i[3]    ; peso = int(i[4])
 
             producto = [id, nombre, tipo, masa, peso]
-            array.append(producto)            
 
-        for x in range(len(array)):
-            tupla = (array[x][0], array[x][4])
+            productos.append(producto) 
 
-            if array[x][2] == "normal":
+        contenedores = [0, 0, 0, 0, 0, 0] 
+        #[0] = NP, [1] = NG, [2] = RP, [3] = RG, [4] = E, [5] = E_I
+        
+        for x in range(len(productos)):
+            
+            tupla = (productos[x][0], productos[x][4])
 
-                if array[x][3] in Contenedor_NP.carga and array[x][4] <= Contenedor_NP.capacidad:
+            if productos[x][2] == "normal":
+
+                if productos[x][3] in Contenedor_NP.carga and productos[x][4] <= Contenedor_NP.capacidad:
                     Contenedor_NP.productos.append(tupla)
-                    array[x] = []
-                
-                elif array[x][3] in Contenedor_RG.carga and array[x][4] <= Contenedor_RG.capacidad:
+                    contenedores[0] += productos[x][4]
+                    productos[x] = []
+                    
+                elif productos[x][3] in Contenedor_NG.carga and productos[x][4] <= Contenedor_NG.capacidad:
                     Contenedor_NG.productos.append(tupla)
-                    array[x] = []
-
-                elif array[x][3] in Estanque.carga:
+                    contenedores[1] += productos[x][4]
+                    productos[x] = []
+                    
+                elif productos[x][3] in Estanque.carga:
                     Estanque.productos.append(tupla)
-                    array[x] = []
+                    contenedores[4] += productos[x][4]
+                    productos[x] = []
 
-            elif array[x][2] == "refrigerado":
+            elif productos[x][2] == "refrigerado":
 
-                if array[x][3] in Contenedor_RP.carga and array[x][4] <= Contenedor_RP.capacidad:
+                if productos[x][3] in Contenedor_RP.carga and productos[x][4] <= Contenedor_RP.capacidad:
                     Contenedor_RP.productos.append(tupla)
-                    array[x] = []
+                    contenedores[2] += productos[x][4]
+                    productos[x] = []
                 
-                elif array[x][3] in Contenedor_RG.carga and array[x][4] <= Contenedor_RG.capacidad:
+                elif productos[x][3] in Contenedor_RG.carga and productos[x][4] <= Contenedor_RG.capacidad:
                     Contenedor_RG.productos.append(tupla)
-                    array[x] = []
+                    contenedores[3] += productos[x][4]
+                    productos[x] = []
             
-            elif array[x][2] == "inflamable":
+            elif productos[x][2] == "inflamable":
 
-                if array[x][3] in Estanque_I.carga:
+                if productos[x][3] in Estanque_I.carga:
                     Estanque_I.productos.append(tupla)
-                    array[x] = [] 
-            
-        print (f"C.Normal_Grande {Contenedor_NG.productos}\n C.Normal_Pequeno {Contenedor_NP.productos}\n C.Refrigerado_Grande {Contenedor_RG.productos}\n C.Refrigerado_Pequeno {Contenedor_RP.productos}\n Estanque {Estanque.productos}\n Estanque_Inflamable {Estanque_I.productos}")
+                    contenedores[5] += productos[x][4]
+                    productos[x] = [] 
+
+
+        print(f"Contenedor NP: {Contenedor_NP.productos}")
+        print(f"Contenedor NG: {Contenedor_NG.productos}")
+        print(f"Contenedor RP: {Contenedor_RP.productos}")
+        print(f"Contenedor RG: {Contenedor_RG.productos}")
+        print(f"Estanque: {Estanque.productos}")
+        print(f"Estanque I: {Estanque_I.productos}")    
+
+        print(f"\n{contenedores} \n")
 
 if __name__ == "__main__":
     csvx("Lista.csv")
