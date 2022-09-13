@@ -44,13 +44,13 @@ class Contenedor_RP:
     productos = []
 @dataclass
 class Estanque:
-    capacidad: int = 100000
+    capacidad: int = 24000
     tipo = "normal"
     carga = ["gas", "liquido"]
     productos  = []
 @dataclass
 class Estanque_I:
-    capacidad: int = 100000
+    capacidad: int = 20000
     tipo = "inflamable"
     carga = ["gas", "liquido"]
     productos  = []

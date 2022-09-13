@@ -72,8 +72,8 @@ def csvx (x):
         cantNG = contenedores[1]//24000 + 1
         cantRP = contenedores[2]//10000 + 1
         cantRG = contenedores[3]//20000 + 1
-        cantE = contenedores[4]//100000 + 1
-        cantEI = contenedores[5]//100000 + 1
+        cantE = contenedores[4]//24000  + 1
+        cantEI = contenedores[5]//20000 + 1
 
     print(f"Contenedor NP: {Contenedor_NP.productos} Cantidad de contenedores: {cantNP}")
     print(f"Contenedor NG: {Contenedor_NG.productos} Cantidad de contenedores: {cantNG}")
@@ -84,16 +84,3 @@ def csvx (x):
 
 if __name__ == "__main__":
     csvx("Lista.csv")
-
-
-
-""" 1,planchas_cobre,normal,solida,10000
-2,carne_roja,refrigerado,solida,1000
-3,gas_licuado,inflamable,gas,25000
-4,aceite_cocina,inflamable,liquido,3000
-5,leche,refrigerado,liquido,15000
-6,carne_blanca,refrigerado,solida,20000
-7,verduras,refrigerado,solida,5000
-8,agua,normal,liquido,100000
-9,helio,normal,gas,10000
-10,planchas_cobre,normal,solida,10000 """
