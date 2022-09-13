@@ -88,6 +88,14 @@ def Enlistar_Contenedores(lista):
     print(f"La cantidad total de contenedores es: {Cant_total}")
     return Cant_total
 
+def Contar_Vehiculos():
+    Total_Vehículos = Barco.cantidad+Tren.cantidad+Avión.cantidad+Camión.cantidad
+    print(f"La cantidad total de vehículos es: {Total_Vehículos}")
+    print(f"Se deben usar {Barco.cantidad} barcos")
+    print(f"Se deben usar {Tren.cantidad} tren")
+    print(f"Se deben usar {Avión.cantidad} aviones")
+    print(f"Se deben usar {Camión.cantidad} camiones")
+
 def Rentabilidad_cont_por_Vehiculo(total_containt):
 
     Valor_Barco  = Barco.costo // (Barco.capacidad //total_containt)
@@ -105,29 +113,38 @@ def Rentabilidad_cont_por_Vehiculo(total_containt):
                 Vehículo_Óptimo.append(tupla)
 
         else: break
+    
+    Costo_Total_Transporte = 0
 
     if Vehículo_Óptimo[-1][0] == "Barco":
         Barco.cantidad += 1
+        print(f"El total de transporte en barcos es: ${Barco.costo}")
+        Costo_Total_Transporte += Barco.costo
     if Vehículo_Óptimo[-1][0] == "Tren":
         Tren.cantidad += 1
+        print(f"El total de transporte  en trenes es: ${Tren.costo}")
+        Costo_Total_Transporte += Tren.costo
     if Vehículo_Óptimo[-1][0] == "Avión":
         Avión.cantidad += 1
+        print(f"El total de transporte en aviónes es: ${Avión.costo}")
+        Costo_Total_Transporte += Avión.costo
     if Vehículo_Óptimo[-1][0] == "Camión":
         Camión.cantidad += 1
+        print(f"El total de transporte en camiones es: ${Camión.costo}")
+        Costo_Total_Transporte += Camión.costo
+    print(f"El costo total de transporte es: ${Costo_Total_Transporte}")
 
     print(f"costo para el barco  es: ${Valor_Barco} ")
     print(f"costo para el tren   es: ${Valor_Tren}  ")
     print(f"costo para el avión  es: ${Valor_Avión} ")
     print(f"costo para el camión es: ${Valor_Camión}")
-    print(f"El vehículo más óptimo es el: {Vehículo_Óptimo[-1][0]}")
+    # print(f"El vehículo más óptimo es el: {Vehículo_Óptimo[-1][0]}")
 
-def Contar_Vehiculos():
-    Total_Vehículos = Barco.cantidad+Tren.cantidad+Avión.cantidad+Camión.cantidad
-    print(f"La cantidad total de vehículos es: {Total_Vehículos}")
-    print(f"Se deben usar {Barco.cantidad} barcos")
-    print(f"Se deben usar {Tren.cantidad} tren")
-    print(f"Se deben usar {Avión.cantidad} aviones")
-    print(f"Se deben usar {Camión.cantidad} camiones")
+
+def Total_Transporte():
+
+
+    pass
 
 def Procesar_Contenedores(total_containt):
 
