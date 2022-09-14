@@ -28,7 +28,7 @@ def csvx (x):
         
         for x in range(len(productos)):
             
-            tupla = (productos[x][0], productos[x][4])
+            tupla = (productos[x][0], productos[x][1], productos[x][2], productos[x][3], productos[x][4])
 
             if productos[x][2] == "normal":
 
@@ -37,7 +37,7 @@ def csvx (x):
                     contenedores[0] += productos[x][4]
                     productos[x] = []
 
-                elif productos[x][3] in Contenedor_NG.carga and productos[x][4] <= Contenedor_NG.capacidad:
+                elif productos[x][3] in Contenedor_NG.carga and productos[x][4] > Contenedor_NP.capacidad:
                     Contenedor_NG.productos.append(tupla)
                     contenedores[1] += productos[x][4]
                     productos[x] = []
@@ -54,7 +54,7 @@ def csvx (x):
                     contenedores[2] += productos[x][4]
                     productos[x] = []
 
-                elif productos[x][3] in Contenedor_RG.carga and productos[x][4] <= Contenedor_RG.capacidad:
+                elif productos[x][3] in Contenedor_RG.carga and productos[x][4] > Contenedor_RP.capacidad:
                     Contenedor_RG.productos.append(tupla)
                     contenedores[3] += productos[x][4]
                     productos[x] = []
@@ -68,12 +68,39 @@ def csvx (x):
 
         print(f"\n{contenedores}\n")
 
-        cantNP = contenedores[0]//12000 + 1
-        cantNG = contenedores[1]//24000 + 1
-        cantRP = contenedores[2]//10000 + 1
-        cantRG = contenedores[3]//20000 + 1
-        cantE = contenedores[4]//24000  + 1
-        cantEI = contenedores[5]//20000 + 1
+        if contenedores[0] == 0:
+            cantNP = 0
+        else:
+            cantNP = contenedores[0]//12000 + 1
+
+        if contenedores[1] == 0:
+            cantNG = 0
+        else:
+            cantNG = contenedores[1]//24000 + 1
+
+        if contenedores[2] == 0:
+            cantRP = 0
+        else:
+            cantRP = contenedores[2]//10000 + 1
+
+        if contenedores[3] == 0:
+            cantRG = 0
+        else:
+            cantRG = contenedores[3]//20000 + 1
+
+        if contenedores[4] == 0:
+            cantE = 0
+        else:
+            cantE = contenedores[4]//24000  + 1
+
+        if contenedores[5] == 0:
+            cantEI = 0
+        else:
+            cantEI = contenedores[5]//20000 + 1
+
+        
+
+    
 
     print(f"Contenedor NP: {Contenedor_NP.productos} Cantidad de contenedores: {cantNP}")
     print(f"Contenedor NG: {Contenedor_NG.productos} Cantidad de contenedores: {cantNG}")
@@ -83,4 +110,4 @@ def csvx (x):
     print(f"Estanque I: {Estanque_I.productos} Cantidad de contenedores: {cantEI}")
 
 if __name__ == "__main__":
-    csvx("Lista.csv")
+    csvx("MOCK_DATA.csv")
