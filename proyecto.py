@@ -73,78 +73,47 @@ def main(productos):
 
 def cantidad_c(contenedores):
 
-    if contenedores[0] == 0:
-        cantNP = 0
-    else:
-        cantNP = contenedores[0]//Contenedor_NP.capacidad + 1
+    matriz  =  [
+        [0,Contenedor_NP.capacidad],    # cant_NP
+        [0,Contenedor_NG.capacidad],    # cant_NG
+        [0,Contenedor_RP.capacidad],    # cant_RP
+        [0,Contenedor_RG.capacidad],    # cant_RG
+        [0,Estanque.capacidad],         # cant_E
+        [0,Estanque_I.capacidad]]       # cant_EI
 
-    if contenedores[1] == 0:
-        cantNG = 0
-    else:
-        cantNG = contenedores[1]//Contenedor_NG.capacidad + 1
+    for x in range(len(contenedores)):
+        if contenedores[x] == 0:
+            matriz[x][0] = 0
+        else:
+            matriz[x][0] = contenedores[x]//matriz[x][1] + 1
 
-    if contenedores[2] == 0:
-        cantRP = 0
-    else:
-        cantRP = contenedores[2]//Contenedor_RP.capacidad + 1
+    cant_total = float(matriz[0][0]*0.5 + matriz[1][0] + matriz[2][0]*0.5 +
+                    matriz[3][0] + matriz[4][0] + matriz[5][0])
 
-    if contenedores[3] == 0:
-        cantRG = 0
-    else:
-        cantRG = contenedores[3]//Contenedor_RG.capacidad + 1
-
-    if contenedores[4] == 0:
-        cantE = 0
-    else:
-        cantE = contenedores[4]//Estanque.capacidad  + 1
-
-    if contenedores[5] == 0:
-        cantEI = 0
-    else:
-        cantEI = contenedores[5]//Estanque_I.capacidad + 1
-
-    cant_total = cantNP*0.5 + cantNG + cantRP*0.5 + cantRG + cantE + cantEI
-
-    print(f"Se necesitan {cantNP} contenedores normales pequeños")
-    print(f"Se necesitan {cantNG} contenedores normales grandes")
-    print(f"Se necesitan {cantRP} contenedores refrigerados pequeños")
-    print(f"Se necesitan {cantRG} contenedores refrigerados grandes")
-    print(f"Se necesitan {cantE} estanques normales")
-    print(f"Se necesitan {cantEI} estanques inflamables \n")
+    print(f"Se necesitan {matriz[0][0]} contenedores normales pequeños")
+    print(f"Se necesitan {matriz[1][0]} contenedores normales grandes")
+    print(f"Se necesitan {matriz[2][0]} contenedores refrigerados pequeños")
+    print(f"Se necesitan {matriz[3][0]} contenedores refrigerados grandes")
+    print(f"Se necesitan {matriz[4][0]} estanques normales")
+    print(f"Se necesitan {matriz[5][0]} estanques inflamables \n")
 
     return cant_total
 
 def cantidad_v(cant_total):
 
-    Capacidades = [Barco.capacidad, Avion.capacidad, Camion.capacidad, Tren.capacidad]
+    Capacidades = [Barco.capacidad, Tren.capacidad, Avion.capacidad, Camion.capacidad]
 
-    if cant_total <= Capacidades[0]:
-        print("Se puede transportar por un barco")
-    else: 
-        B_necesarios = int(cant_total//Capacidades[0] + 1)
-        print(f"Se necesitan {B_necesarios} barcos para transportar todo")
+    V_necesarios = [[0,"barco"],[0,"tren"],[0,"avión"],[0,"camión"]]
 
-    if cant_total <= Capacidades[1]:
-        print("Se puede transportar por un avion")
+    for x in range(len(Capacidades)):
+        if cant_total <= Capacidades[x]:
+            print(f"Se puede transportar por un {V_necesarios[x][1]}")
+        else:
+            V_necesarios[x][0] = int(cant_total//Capacidades[x] + 1)
+            print(f"Se necesitan {V_necesarios[x][0]} {V_necesarios[x][1]} para transportar todo")
 
-    else:
-        A_necesarios = int(cant_total//Capacidades[1] + 1)
-        print(f"Se necesitan {A_necesarios} aviones para transportar todo")
-    
-    if cant_total <= Capacidades[2]:
-        print("Se puede transportar por un camion")
-    else:
-        C_necesarios = int(cant_total//Capacidades[2] + 1)
-        print(f"Se necesitan {C_necesarios} camiones para transportar todo")
-
-    if cant_total <= Capacidades[3]:
-        print("Se puede transportar por un tren")
-
-    else:
-        T_necesarios = int(cant_total//Capacidades[3] + 1)
-        print(f"Se necesitan {T_necesarios} trenes para transportar todo")
-
-    necesarios = [B_necesarios, A_necesarios, C_necesarios, T_necesarios]
+    necesarios = [V_necesarios[0][0],V_necesarios[1][0],V_necesarios[2][0],
+                    V_necesarios[3][0]]
 
     return necesarios
 
@@ -161,9 +130,4 @@ def costos(necesarios):
 
 if __name__ == "__main__":
 
-
-    (csvx("MOCK_DATA.csv"))
-    main(csvx("MOCK_DATA.csv"))
-    cantidad_c(main(csvx("MOCK_DATA.csv")))
-    cantidad_v(cantidad_c(main(csvx("MOCK_DATA.csv"))))
     costos(cantidad_v(cantidad_c(main(csvx("MOCK_DATA.csv")))))
