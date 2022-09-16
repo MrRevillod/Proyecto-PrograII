@@ -99,7 +99,7 @@ def cantidad_c(contenedores):
 
     return cant_total
 
-def cantidad_v(cant_total):
+def cantidad_v(cant_total):    
 
     Capacidades = [Barco.capacidad, Tren.capacidad, Avion.capacidad, Camion.capacidad]
 
@@ -107,9 +107,10 @@ def cantidad_v(cant_total):
 
     for x in range(len(Capacidades)):
         if cant_total <= Capacidades[x]:
+            V_necesarios[x][0] = cant_total/Capacidades[x]
             print(f"Se puede transportar por un {V_necesarios[x][1]}")
         else:
-            V_necesarios[x][0] = int(cant_total//Capacidades[x] + 1)
+            V_necesarios[x][0] = int(cant_total/Capacidades[x] + 1)
             print(f"Se necesitan {V_necesarios[x][0]} {V_necesarios[x][1]} para transportar todo")
 
     necesarios = [V_necesarios[0][0],V_necesarios[1][0],V_necesarios[2][0],
@@ -120,14 +121,14 @@ def cantidad_v(cant_total):
 
 def costos(necesarios):
 
-    B_costo = necesarios[0]*Barco.costo
-    A_costo = necesarios[1]*Avion.costo
-    C_costo = necesarios[2]*Camion.costo
-    T_costo = necesarios[3]*Tren.costo
+    B_costo = int(necesarios[0]*Barco.costo)
+    A_costo = int(necesarios[1]*Avion.costo)
+    C_costo = int(necesarios[2]*Camion.costo)
+    T_costo = int(necesarios[3]*Tren.costo)
 
     costos = [B_costo, A_costo, C_costo, T_costo]
     print (costos)
 
 if __name__ == "__main__":
 
-    costos(cantidad_v(cantidad_c(main(csvx("MOCK_DATA.csv")))))
+    costos(cantidad_v(cantidad_c(main(csvx("Lista.csv")))))
