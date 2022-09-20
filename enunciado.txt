@@ -97,3 +97,4 @@ Enunciado Entrega 1
         Costo de transporte:
             Total de transporte. (2 pts)
             Totales parciales por cada tipo de vehículo. (2 pts)
+    Puntaje total: 68 pts

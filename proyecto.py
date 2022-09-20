@@ -25,6 +25,7 @@ def csvx (x):
 
         return productos
 
+
 def main(productos):
 
     contenedores = [0, 0, 0, 0, 0, 0] #[0] = NP, [1] = NG, [2] = RP, [3] = RG, [4] = E, [5] = E_I
@@ -71,6 +72,7 @@ def main(productos):
 
     return contenedores
 
+
 def cantidad_c(contenedores):
 
     matriz  =  [
@@ -99,6 +101,7 @@ def cantidad_c(contenedores):
 
     return cant_total
 
+
 def cantidad_v(cant_total):    
 
     Capacidades = [Barco.capacidad, Tren.capacidad, Avion.capacidad, Camion.capacidad]
@@ -121,14 +124,36 @@ def cantidad_v(cant_total):
 
 def costos(necesarios):
 
-    B_costo = int(necesarios[0]*Barco.costo)
-    A_costo = int(necesarios[1]*Avion.costo)
-    C_costo = int(necesarios[2]*Camion.costo)
-    T_costo = int(necesarios[3]*Tren.costo)
+    Presupuesto = [[0,Barco.costo],[0,Tren.costo],[0,Avion.costo],[0,Camion.costo]]
 
-    costos = [B_costo, A_costo, C_costo, T_costo]
-    print (costos)
+    Vehiculos = ["barcos","trenes","aviones","camiones"]
+
+    Costos = []
+
+    for x in range(len(necesarios)):
+        if necesarios[x] <= 1:
+            Presupuesto[x][0] = Presupuesto[x][1]
+            print(f"El costo total al utilizar {Vehiculos[x]} es: "  "{:,.0f}".format(Presupuesto[x][0]).replace(",","@").replace(".",",").replace("@","."))
+            lista = [Vehiculos[x],Presupuesto[x][0]]
+            Costos.append(lista)
+
+        else:
+            Presupuesto[x][0] = int(necesarios[x]*Presupuesto[x][1])
+            print(f"El costo total al utilizar {Vehiculos[x]} es: "  "{:,.0f}".format(Presupuesto[x][0]).replace(",","@").replace(".",",").replace("@","."))
+            lista = [Vehiculos[x],Presupuesto[x][0]]
+            Costos.append(lista)
+    return Costos
+
+
+def print_mayor_rentabilidad(Costos):
+    rentable = 0
+    for x in range(len(Costos)):
+        if rentable <= Costos[x][1]:
+            rentable = rentable
+        else:
+            pass
+
 
 if __name__ == "__main__":
 
-    costos(cantidad_v(cantidad_c(main(csvx("Lista.csv")))))
+    costos(cantidad_v(cantidad_c(main(csvx("MOCK_DATA.csv")))))
