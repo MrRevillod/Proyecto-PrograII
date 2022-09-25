@@ -32,13 +32,9 @@ El archivo tendrá el siguiente formato estándar:
 ID_Producto
 Nombre_Producto
 Tipo
-Normal (sin restricciones especiales de transporte)
-Refrigerado
-Inflamable
+Normal (sin restricciones especiales de transporte) Refrigerado Inflamable
 Masa
-Sólida (contenedor)
-Líquida (estanque)
-Gas (estanque)
+Sólida (contenedor) Líquida (estanque) Gas (estanque)
 Peso
 Peso del total de productos en Kilogramos
 El programa deberá leer el archivo y distribuir la lista de productos de la forma más optima en relación a costo de transporte. (menor costo posible)

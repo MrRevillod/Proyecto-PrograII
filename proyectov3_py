@@ -17,14 +17,17 @@ sumas_Totales = []
 
 strings_for_prints = ["solida", "liquida", "gaseosa"]
 
+# Leer el archivo csv (retorna una matriz con cada producto como una lista
+#                        con sus respectivos atributos)
 def read_csv (x):
     with open(x, 'r') as c:
         line = csv.reader(c)
         lista = list(line)
     return lista
 
+# Asigna la cantidad de contenedores a cada tipo de contenedor
+# (pesos_normales, pesos_refrigerados, pesos_inflamables)
 def main(lista, lista_pesos, tipo_prod):
-
     for i in range(len(lista)):
         if lista[i][2] == tipo_prod:
             if lista[i][3] == "solida":
@@ -36,6 +39,8 @@ def main(lista, lista_pesos, tipo_prod):
             elif lista[i][3] == "gas":
                 lista_pesos[2].append(int(lista[i][4]))
 
+# Muestra la cantidad de contenedores por tipo de contenedor, la masa de
+# de los productos y el tamaño del contenedor
 def Total_Contenedores(total_c, peso_max, tipo_C, masa):
     cont_g = 0
     cont_p = 0
@@ -62,11 +67,20 @@ def Total_Contenedores(total_c, peso_max, tipo_C, masa):
 
 if __name__ == "__main__":
     productos= read_csv("MOCK_DATA.csv")
+
+    # Sirve para asignar especificamente los pesos de cada producto en cada tipo
+    # de contenedor por masa (solida, liquida, gaseosa)
     for x in range(len(lista_tipo_cont)):
         main(productos, lista_tipo_cont[x][0], lista_tipo_cont[x][1])
+
+    # Suma los valores de las listas (tipos de contenedores con su respectiva masa)
+    # y las asigna a la lista sumas_Totales []
     for c in range(len(lista_tipo_cont2)):
         for v in range(len(lista_tipo_cont2[c])):
             sumas_Totales.append((sum(lista_tipo_cont2[c][v])/1000))
+
+    # cada for es para imprima cada tipo de contenedor con su masa recorriendo
+    # la lista sumas_Totales
     for x in range(0, 3):
         Total_Contenedores(sumas_Totales[x], 24, "normales",strings_for_prints[x])
     for x in range(3, 6):
