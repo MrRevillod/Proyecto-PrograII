@@ -1,0 +1,55 @@
+import dataclasses
+import csv
+from classes import *
+
+def read_csv (x):
+    with open(x, 'r') as c:
+        line = csv.reader(c)
+        lista = list(line)
+    return lista
+
+contenedores_NSG = [] ; contenedores_NLG = [] ; contenedores_NGG = []
+
+contenedores_RSG = [] ; contenedores_RLG = [] ; contenedores_RGG = [] 
+
+contenedores_ISG = [] ; contenedores_ILG = [] ; contenedores_IGG = [] 
+
+pesos_normales = [contenedores_NSG, contenedores_NLG, contenedores_NGG]
+pesos_refrigerados = [contenedores_RSG, contenedores_RLG, contenedores_RGG]
+pesos_inflamables = [contenedores_ISG, contenedores_ILG, contenedores_IGG]
+
+def main(lista, lista_pesos, tipo_prod):
+
+    for i in range(len(lista)):
+        if lista[i][2] == tipo_prod:
+            if lista[i][3] == "solida":
+                lista_pesos[0].append(int(lista[i][4]))
+
+            elif lista[i][3] == "liquida":
+                lista_pesos[1].append(int(lista[i][4]))
+
+            elif lista[i][3] == "gas":
+                lista_pesos[2].append(int(lista[i][4]))
+
+
+def Total_Contenedores(total_c, peso_max):
+    if total_c >= peso_max:
+        Cant_Cont_Grandes = total_c / peso_max 
+        print(round(Cant_Cont_Grandes), "contenedores grandes")
+
+        resto = total_c % peso_max # Resto
+
+        if resto > (peso_max/2):
+            print("2 contenedores pequeños")
+        else:
+            print("1 contenedores pequeños")
+
+    else:
+        Cant_Cont_Grandes = total_c / (peso_max/2)
+
+if __name__ == "__main__":
+    lista = read_csv("MOCK_DATA.csv")
+    normales = main(lista, pesos_normales, "normal")
+    print(f"con NSG {round(sum(contenedores_NSG)/1000)}")
+    TNS = sum(contenedores_NSG)/1000
+    Total_Contenedores(TNS, 24)

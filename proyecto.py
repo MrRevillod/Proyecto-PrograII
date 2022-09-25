@@ -145,15 +145,18 @@ def costos(necesarios):
     return Costos
 
 
-def print_mayor_rentabilidad(Costos):
-    rentable = 0
-    for x in range(len(Costos)):
-        if rentable <= Costos[x][1]:
-            rentable = rentable
-        else:
-            pass
+# def print_mayor_rentabilidad(Costos):
+    # rentable = []
+    # for x in range(len(Costos)):
+        # if :
+
+        # elif x == len(Costos[-1]):
+
+        # elif Costos[x][1] >= Costos[x+1][1]:
+        #     rentable = Costos[x+1][1]
+    # print(f"\n{rentable}")
 
 
 if __name__ == "__main__":
 
-    costos(cantidad_v(cantidad_c(main(csvx("MOCK_DATA.csv")))))
+    (costos(cantidad_v(cantidad_c(main(csvx("MOCK_DATA.csv"))))))
