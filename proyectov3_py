@@ -2,21 +2,26 @@ import dataclasses
 import csv
 from classes import *
 
+cont_NS = [] ; cont_NL = [] ; cont_NG = []
+cont_RS = [] ; cont_RL = [] ; cont_RG = [] 
+cont_IS = [] ; cont_IL = [] ; cont_IG = [] 
+
+pesos_normales      =   [cont_NS, cont_NL, cont_NG]
+pesos_refrigerados  =   [cont_RS, cont_RL, cont_RG]
+pesos_inflamables   =   [cont_IS, cont_IL, cont_IG]
+
+lista_tipo_cont  = [[pesos_normales,"normal"], [pesos_refrigerados,"refrigerado"], [pesos_inflamables,"inflamable"]]
+lista_tipo_cont2 = [pesos_normales, pesos_refrigerados, pesos_inflamables]
+
+sumas_Totales = []
+
+strings_for_prints = []
+
 def read_csv (x):
     with open(x, 'r') as c:
         line = csv.reader(c)
         lista = list(line)
     return lista
-
-contenedores_NSG = [] ; contenedores_NLG = [] ; contenedores_NGG = []
-
-contenedores_RSG = [] ; contenedores_RLG = [] ; contenedores_RGG = [] 
-
-contenedores_ISG = [] ; contenedores_ILG = [] ; contenedores_IGG = [] 
-
-pesos_normales = [contenedores_NSG, contenedores_NLG, contenedores_NGG]
-pesos_refrigerados = [contenedores_RSG, contenedores_RLG, contenedores_RGG]
-pesos_inflamables = [contenedores_ISG, contenedores_ILG, contenedores_IGG]
 
 def main(lista, lista_pesos, tipo_prod):
 
@@ -31,25 +36,42 @@ def main(lista, lista_pesos, tipo_prod):
             elif lista[i][3] == "gas":
                 lista_pesos[2].append(int(lista[i][4]))
 
-
 def Total_Contenedores(total_c, peso_max):
+    cont_g = 0
+    cont_p = 0
     if total_c >= peso_max:
-        Cant_Cont_Grandes = total_c / peso_max 
-        print(round(Cant_Cont_Grandes), "contenedores grandes")
-
+        cont_g += total_c / peso_max 
         resto = total_c % peso_max # Resto
 
         if resto > (peso_max/2):
-            print("2 contenedores pequeños")
-        else:
-            print("1 contenedores pequeños")
+            cont_p += 1
+            resto_menor = resto % (peso_max/2)
 
-    else:
-        Cant_Cont_Grandes = total_c / (peso_max/2)
+        if resto <= (peso_max/2) or resto_menor <= (peso_max/2):
+            cont_p += 1
+
+    elif total_c > (peso_max/2):
+        cont_p += 1
+        resto_menor = total_c % (peso_max/2)
+
+        if resto <= (peso_max/2) or resto_menor <= (peso_max/2):
+            cont_p += 1
+
+    print(f"Contenedores Normales Solidos grandes: {round(cont_g)}")
+    print(f"Contenedores normales solidos pequeños: {cont_p}")
 
 if __name__ == "__main__":
-    lista = read_csv("MOCK_DATA.csv")
-    normales = main(lista, pesos_normales, "normal")
-    print(f"con NSG {round(sum(contenedores_NSG)/1000)}")
-    TNS = sum(contenedores_NSG)/1000
-    Total_Contenedores(TNS, 24)
+    productos= read_csv("MOCK_DATA.csv")
+    for x in range(len(lista_tipo_cont)):
+        main(productos, lista_tipo_cont[x][0], lista_tipo_cont[x][1])
+    for c in range(len(lista_tipo_cont2)):
+        for v in range(len(lista_tipo_cont2[c])):
+            sumas_Totales.append((sum(lista_tipo_cont2[c][v])/1000))
+    for x in range(0, 3):
+        Total_Contenedores(sumas_Totales[x], 24)
+    for x in range(3, 6):
+        Total_Contenedores(sumas_Totales[x], 20)
+    for x in range(6, 9):
+        Total_Contenedores(sumas_Totales[x], 22)
+    # tNS = sumas_Totales[0]
+    # Total_Contenedores(tNS, 24)
