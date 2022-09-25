@@ -15,7 +15,7 @@ lista_tipo_cont2 = [pesos_normales, pesos_refrigerados, pesos_inflamables]
 
 sumas_Totales = []
 
-strings_for_prints = []
+strings_for_prints = ["solida", "liquida", "gaseosa"]
 
 def read_csv (x):
     with open(x, 'r') as c:
@@ -36,7 +36,7 @@ def main(lista, lista_pesos, tipo_prod):
             elif lista[i][3] == "gas":
                 lista_pesos[2].append(int(lista[i][4]))
 
-def Total_Contenedores(total_c, peso_max):
+def Total_Contenedores(total_c, peso_max, tipo_C, masa):
     cont_g = 0
     cont_p = 0
     if total_c >= peso_max:
@@ -57,8 +57,8 @@ def Total_Contenedores(total_c, peso_max):
         if resto <= (peso_max/2) or resto_menor <= (peso_max/2):
             cont_p += 1
 
-    print(f"Contenedores Normales Solidos grandes: {round(cont_g)}")
-    print(f"Contenedores normales solidos pequeños: {cont_p}")
+    print(f"Contenedores {tipo_C} grandes con masa {masa}: {round(cont_g)}")
+    print(f"Contenedores {tipo_C} pequeños con masa {masa}: {cont_p}")
 
 if __name__ == "__main__":
     productos= read_csv("MOCK_DATA.csv")
@@ -68,10 +68,8 @@ if __name__ == "__main__":
         for v in range(len(lista_tipo_cont2[c])):
             sumas_Totales.append((sum(lista_tipo_cont2[c][v])/1000))
     for x in range(0, 3):
-        Total_Contenedores(sumas_Totales[x], 24)
+        Total_Contenedores(sumas_Totales[x], 24, "normales",strings_for_prints[x])
     for x in range(3, 6):
-        Total_Contenedores(sumas_Totales[x], 20)
+        Total_Contenedores(sumas_Totales[x], 20, "refrigerados", strings_for_prints[x-3])
     for x in range(6, 9):
-        Total_Contenedores(sumas_Totales[x], 22)
-    # tNS = sumas_Totales[0]
-    # Total_Contenedores(tNS, 24)
+        Total_Contenedores(sumas_Totales[x], 22, "inflamables", strings_for_prints[x-6])
