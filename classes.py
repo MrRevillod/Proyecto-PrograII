@@ -2,63 +2,38 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Producto:
-	tipo_Cont = str
+class Deposito:
+	id_Prod = int
+	nom_Prod = str
+	tipo_Dep = str
 	tipo_Carga = str
 	masa = str
 	peso = int
-	cont_G = 0
-	cont_P = 0
+	porte = str
 
-	def atributos(self, tipo_Carga, masax, pesox):
+	def atributos(self, id_Prodx, nom_Prodx, tipo_Carga, masax, pesox, portex):
+		self.id_Prod = id_Prodx
+		self.nom_Prod = nom_Prodx
 		self.tipo_Carga = tipo_Carga
 		self.masa = masax
 		self.peso = pesox
+		self.porte = portex
 		if masax == "solida":
-			self.tipo_Cont = "contenedor"
+			self.tipo_Dep = "contenedor"
 		else:
-			self.tipo_Cont = "estanque"
-		peso_Max_Por_Carga_Cont = [
-													["normal",24000],
-													["refrigerado", 20000],
-													["inflamable",22000]]
-		for x in range(len(peso_Max_Por_Carga_Cont)):
-			if tipo_Carga == peso_Max_Por_Carga_Cont[x][0]:
-				peso_Max = peso_Max_Por_Carga_Cont[x][1]
-				self.cant_Cont(pesox, peso_Max)
-				return
-
-	def cant_Cont(self, pesox, pesomax):
-		if pesox >= pesomax:
-			self.cont_G += pesox//pesomax
-			resto = pesox % pesomax
-			self.cant_Cont(resto, pesomax)
-		elif pesox > (pesomax/2) :
-			self.cont_P += 1
-			resto = (pesox % pesomax/2)
-			self.cant_Cont(resto, pesomax)
-		else:
-			self.cont_P += 1
-		return
+			self.tipo_Dep = "estanque"
 
 @dataclass
 class Vehiculos:
-	tren = int
-	avion = int
-	camion = int
+	nom_Vh = str
+	cant_Cont = int
+	costo = int
 
-	def cantidad(self, cont_Totales):
-		if cont_Totales >= 250:
-			self.tren += cont_Totales // 250
-			resto = cont_Totales % 250
-			self.cantidad(resto)
-		elif cont_Totales >= 10:
-			self.avion += cont_Totales// 10
-			resto = cont_Totales % 10
-			self.cantidad(resto)
-		elif cont_Totales <= 1:
-			self.camion += 1
-			return
-		else:
-			self.avion += 1
-			return
+	def assign_atr(self, cant_Contx):
+		self.cant_Cont = cant_Contx
+		if cant_Contx >= 250:
+			self.nom_Vh = "tren"; self.costo = 10000000
+		elif cant_Contx >= 2:
+			self.nom_Vh = "avion"; self.costo = 1000000
+		elif cant_Contx <= 1:
+			self.nom_Vh = "camion"; self.costo = 500000
