@@ -8,8 +8,8 @@ lista_Cont = [
 
 lista_Vh = [[],[],[]]
 # Leer el archivo csv (retorna una matriz con cada producto como una lista
-#                        con sus respectivos atributos). 
-# 										Todos los valores	retornados son strings
+#con sus respectivos atributos). Todos los valores	retornados son strings
+
 def read_csv(x):
     with open(x, 'r') as c:
         line = csv.reader(c)
@@ -18,6 +18,17 @@ def read_csv(x):
 
 # Asigna la cantidad de contenedores a cada tipo de contenedor
 # (pesos_normales, pesos_refrigerados, pesos_inflamables)
+
+
+def printear(lista_Vh):
+	cantidad = 0
+	for x in range(3):
+		cantidad = len(lista_Vh[x])
+		print("Cantidad de vehiculos: ", cantidad)
+		cantidad = len(lista_Vh[x])
+	print("Cantidad de vehiculos: ", cantidad)
+
+
 
 
 def lista_Contenedores(lista, lista_Cont):
@@ -57,8 +68,6 @@ def lista_Contenedores(lista, lista_Cont):
 						break
 			else:
 				continue
-	# print(lista_Cont[1][2][2].id_Prod)
-	# cont_Totales(lista_Cont)
 	return
 
 def cant_Cont(pesox, pesomax):
@@ -92,13 +101,12 @@ def cont_Totales(lista_Cont):
 					cantidad_Total += 0.5
 				elif lista_Cont[x][y][j].porte == "grande":
 					cantidad_Total += 1
-				# if lista_Cont[x][y][j].id_Prod == 100:
-				# 	print(lista_Cont[x][y][j].tipo_Carga)
+
 	return cantidad_Total
 
 def cant_Vh(cont_Totales):
-	# barco = 0 (este se excluye porque en ningun punto su rentabilidad
-	# 						queda por encima de todos los vehiculos).
+	# barco = 0 (este se excluye porque en ningun punto su rentabilidad queda por encima de todos los vehiculos).
+
 	tren = 0
 	avion = 0
 	camion = 0
@@ -165,3 +173,4 @@ if __name__ == "__main__":
 	lista = read_csv("MOCK_DATA.csv")
 	lista_Contenedores(lista, lista_Cont)
 	assing_Vh(cant_Vh(cont_Totales(lista_Cont)), lista_Vh)
+	printear(lista_Vh)
