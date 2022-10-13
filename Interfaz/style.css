@@ -18,6 +18,11 @@ main {
     align-items: center;
 }
 
+hr {
+    color: #fff;
+    margin-top: 0.5rem;
+}
+
 aside {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 0.5rem;
@@ -25,10 +30,24 @@ aside {
     color: white;
     height: 630px;
     width: 400px;
-    translate: -25px;
-    transform: translateY(7%);
+    margin: 0 1rem;
+    transform: translateY(7.5%);
     display: flex;
     flex-direction: column;
+}
+
+#right {
+    justify-content: center;
+    align-items: center;
+}
+
+#right button {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 aside h2 {
