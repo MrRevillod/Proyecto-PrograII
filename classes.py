@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-
 @dataclass
 class Deposito:
 	id_Prod = int

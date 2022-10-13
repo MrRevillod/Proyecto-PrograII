@@ -1,5 +1,6 @@
 import csv
 from classes import *
+import json as js
 
 lista_Cont = [
     ["normal", ["solida", ], ["liquida", ], ["gas", ]],
@@ -19,7 +20,6 @@ def read_csv(x):
 # Asigna la cantidad de contenedores a cada tipo de contenedor
 # (pesos_normales, pesos_refrigerados, pesos_inflamables)
 
-
 def printear(lista_Vh):
 	cantidad = 0
 	for x in range(3):
@@ -27,9 +27,6 @@ def printear(lista_Vh):
 		print("Cantidad de vehiculos: ", cantidad)
 		cantidad = len(lista_Vh[x])
 	print("Cantidad de vehiculos: ", cantidad)
-
-
-
 
 def lista_Contenedores(lista, lista_Cont):
 	peso_Max_Por_Tipo_Cont = [
@@ -167,10 +164,12 @@ def assing_Vh(lista_Vhs, lista_Vh):
 			obj.assign_atr(lista_Vhs[x][1])
 			lista_Vh[x].append(obj)
 	print(lista_Vh[1][0].nom_Vh)
+	print (lista_Vh[1][0].costo)
 
 
 if __name__ == "__main__":
 	lista = read_csv("MOCK_DATA.csv")
 	lista_Contenedores(lista, lista_Cont)
 	assing_Vh(cant_Vh(cont_Totales(lista_Cont)), lista_Vh)
-	printear(lista_Vh)
+	
+	
