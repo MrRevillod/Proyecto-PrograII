@@ -11,10 +11,10 @@ class Deposito:
 	peso = int
 	porte = str
 
-	def atributos(self, id_Prodx, nom_Prodx, tipo_Carga, masax, pesox, portex):
+	def atributos(self, id_Prodx, nom_Prodx, tipo_Cargax, masax, pesox, portex):
 		self.id_Prod = id_Prodx
 		self.nom_Prod = nom_Prodx
-		self.tipo_Carga = tipo_Carga
+		self.tipo_Carga = tipo_Cargax
 		self.masa = masax
 		self.peso = pesox
 		self.porte = portex
