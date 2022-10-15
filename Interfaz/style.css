@@ -45,9 +45,15 @@ aside {
     height: 100px;
     width: 100px;
     border-radius: 50%;
+
+    margin-bottom: 1rem;
+}
+
+a {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 1rem;
+    text-decoration: none;
+    color: black;
 }
 
 aside h2 {
