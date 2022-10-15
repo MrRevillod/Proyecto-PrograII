@@ -1,4 +1,5 @@
 import csv
+import json
 from classes import *
 
 lista_Cont = [
@@ -46,7 +47,7 @@ def lista_Contenedores(lista, lista_Cont):
 										obj = Deposito()
 										obj.atributos(int(lista[i][0]), lista[i][1],
 																	lista[i][2], lista[i][3],
-																	arr[1][1], "pequeño")
+																	arr[1][1], "pequeno")
 										lista_Cont[x][j].append(obj)
 									else:
 										obj = Deposito()
@@ -88,7 +89,7 @@ def cont_Totales(lista_Cont):
 	for x in range(len(lista_Cont)):
 		for y in range(1, len(lista_Cont[0])):
 			for j in range(1, len(lista_Cont[x][y])):
-				if lista_Cont[x][y][j].porte == "pequeño":
+				if lista_Cont[x][y][j].porte == "pequeno":
 					cantidad_Total += 0.5
 				elif lista_Cont[x][y][j].porte == "grande":
 					cantidad_Total += 1
@@ -137,7 +138,7 @@ def cant_Vh(cont_Totales):
 		return [[tren], [avion,cont_Totales], [camion]]
 
 def assing_Vh(lista_Vhs, lista_Vh):
-	print(lista_Vhs[0][0])
+	# print(lista_Vhs[0][0])
 	for x in range(len(lista_Vhs)):
 		if x == 0 and len( lista_Vhs[x] ) != 2:
 			for t in range(int( lista_Vhs[0][0] )):
@@ -158,10 +159,27 @@ def assing_Vh(lista_Vhs, lista_Vh):
 			obj = Vehiculos()
 			obj.assign_atr(lista_Vhs[x][1])
 			lista_Vh[x].append(obj)
-	print(lista_Vh[1][0].nom_Vh)
+	# print(lista_Vh[1][0].nom_Vh)
+
+# def jsonalgo(lista_Cont):
+	
+def jsonconvert(lista_Cont):
+	lista = [[],[]]
+	with open("contenedores.json", "w") as file:
+		for x in range(len(lista_Cont)):
+			for y in range(1, len(lista_Cont[0])):
+				for j in range(1, len(lista_Cont[x][y])):
+					lista[0].append(lista_Cont[x][y][j].__dict__)
+		json.dump(lista[0], file, indent=7)
+
+	with open("vehiculos.json", "w") as file:
+		for t in range(len(lista_Vh)):
+				lista[1].append(lista_Vh[0][t].__dict__)
+		json.dump(lista[1], file, indent=3)
 
 
 if __name__ == "__main__":
 	lista = read_csv("MOCK_DATA.csv")
 	lista_Contenedores(lista, lista_Cont)
 	assing_Vh(cant_Vh(cont_Totales(lista_Cont)), lista_Vh)
+	jsonconvert(lista_Cont)
