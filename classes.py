@@ -1,6 +1,4 @@
 from dataclasses import dataclass
-
-
 @dataclass
 class Deposito:
 	id_Prod = int
@@ -28,8 +26,10 @@ class Vehiculos:
 	nom_Vh = str
 	cant_Cont = int
 	costo = int
+	list_Depositos = list
 
-	def assign_atr(self, cant_Contx):
+	def assign_atr(self, cant_Contx, lista):
+		self.list_Depositos = lista
 		self.cant_Cont = cant_Contx
 		if cant_Contx >= 250:
 			self.nom_Vh = "tren"; self.costo = 10000000
