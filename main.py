@@ -8,7 +8,7 @@ lista_Cont = [
     ["refrigerado", ["solida", ], ["liquida", ], ["gas", ]],
     ["inflamable", ["solida", ], ["liquida", ], ["gas", ]]]
 
-nom_Vh = ["Trenes.json", "Aviones.json", "Camión.json"]
+nom_Vh = ["./Interfaz/JSON/Trenes.json", "./Interfaz/JSON/Aviones.json", "./Interfaz/JSON/Camión.json"]
 # cantidad de vehiculos [0] = tren, [1] =avion, [2] = camion
 lista_Vh = [[],[],[]]
 # Leer el archivo csv (retorna una matriz en la que cada sublista

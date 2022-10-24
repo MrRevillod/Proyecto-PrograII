@@ -1,4 +1,4 @@
-from proyectov3 import *
+from main import *
 from classes import *
 
 def prints_Enunciado_1(lista_Vh):
@@ -29,3 +29,6 @@ if __name__ == "__main__":
 	for index in range(len(lista_Vehiculos)):
 		jsonconvert(index, lista_Vehiculos, nom_Vh)
 	prints_Enunciado_1(lista_Vh)
+
+#Json son creados para la interfaz grafica
+#Mock_data.csv fue acortado (solo 15 productos)
