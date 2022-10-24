@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+import random as ra
 @dataclass
 class Deposito:
 	id_Prod = int
@@ -10,10 +10,10 @@ class Deposito:
 	peso = int
 	porte = str
 
-	def atributos(self, id_Prodx, nom_Prodx, tipo_Carga, masax, pesox, portex):
+	def atributos(self, id_Prodx, nom_Prodx, tipo_Cargax, masax, pesox, portex):
 		self.id_Prod = id_Prodx
 		self.nom_Prod = nom_Prodx
-		self.tipo_Carga = tipo_Carga
+		self.tipo_Carga = tipo_Cargax
 		self.masa = masax
 		self.peso = pesox
 		self.porte = portex
@@ -37,6 +37,7 @@ class Vehiculos:
 	nom_Vh = str
 	cant_Cont = int
 	costo = int
+	list_Depositos = []
 
 	def assign_atr(self, cant_Contx):
 		self.cant_Cont = cant_Contx

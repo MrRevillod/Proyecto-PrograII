@@ -90,93 +90,78 @@ def cant_Cont(pesox, pesomax):
 # como un entero, cada uno vale 0.5 respecto de uno grande
 def cont_Totales(lista_Cont):
 	cantidad_Total = float(0)
+	lista = []
 	for x in range(len(lista_Cont)):
 		for y in range(1, len(lista_Cont[0])):
 			for j in range(1, len(lista_Cont[x][y])):
+				lista.append(lista_Cont[x][y][j])
 				if lista_Cont[x][y][j].porte == "pequeno":
 					cantidad_Total += 0.5
 				elif lista_Cont[x][y][j].porte == "grande":
 					cantidad_Total += 1
-				# if lista_Cont[x][y][j].id_Prod == 100:
-				# 	print(lista_Cont[x][y][j].tipo_Carga)
-	return cantidad_Total
+	return [cantidad_Total, lista]
 
 # retorna una lista con la cantidad de vehiculos, si hay un resto
 # se le asigna al vehiculo correspondiente, esto se utiliza en la
 # función Dep_en_Vh.
 def cant_Vh(cont_Totales):
-	# barco = 0 (este se excluye porque en ningun punto su rentabilidad
-	# 						queda por encima de todos los vehiculos).
-	tren = 0
-	avion = 0
-	camion = 0
+	tren = 0; avion = 0; camion = 0
 	lista = [[tren], [avion], [camion]]
 	if cont_Totales >= 250:
-		tren += cont_Totales // 250
+		lista[0][0] += cont_Totales // 250
 		resto = cont_Totales % 250
 		if resto >= 10:
-			avion += resto // 10
-			resto_menor = avion % 10
+			lista[1][0] += resto // 10
+			resto_menor = resto % 10
 			if resto_menor <= 1:
-				camion += 1 ; lista[2].append(resto_menor)
+				lista[2][0] += 1 ; lista[2].append(resto_menor)
 			else:
-				avion += 1 ; lista[1].append(resto_menor)
+				lista[1][0] += 1 ; lista[1].append(resto_menor)
 		elif resto <= 1:
-			camion += 1 ; lista[2].append(resto)
+			lista[2][0] += 1 ; lista[2].append(resto)
 		else:
-			avion += 1 ; lista[1].append(resto)
+			lista[1][0] += 1 ; lista[1].append(resto)
 	elif cont_Totales >= 10:
-		avion += cont_Totales// 10
+		lista[1][0] += cont_Totales// 10
 		resto = cont_Totales % 10
 		if resto <= 1:
-			camion += 1 ; lista[2].append(resto)
+			lista[2][0] += 1 ; lista[2].append(resto)
 		else:
-			avion += 1 ; lista[1].append(resto)
+			lista[1][0] += 1 ; lista[1].append(resto)
 	elif cont_Totales <= 1:
-		camion += 1 ; lista[2].append(cont_Totales)
+		lista[2][0] += 1 ; lista[2].append(cont_Totales)
 	else:
-		avion += 1 ; lista[1].append(cont_Totales)
-		return lista
+		lista[1][0] += 1 ; lista[1].append(cont_Totales)
+	return lista
 
 # Crea las instancias de vehiculos y los agrega a la lista_Vh,
 # tambien para cada instancia agrega los contenedores correspondientes
-# a cada vehiculo en concreto.
-def Dep_en_Vh(cant_Vhs, lista_Cont, lista_Vh):
-	cont_maximos = [250, 10, 1]
-	for k in range(len(cant_Vhs)):
-		if len(cant_Vhs[k]) == 2:
-			# obj = Vehiculos()
-			# obj.assign_atr(cant_Vhs[x][1]) # falta agregar los contenedores
-																			# correspondientes al vehiculo
-			# lista_Vh[k].append(obj)
-			pass
-		if cant_Vhs[k][0] > 0:
-			for r in range((int(cant_Vhs[k][0]))):
-				vh = Vehiculos()
-				lista = []
-				for x in range(len(lista_Cont)):
-					for y in range(1, len(lista_Cont[0])):
-						for j in range(1, len(lista_Cont[x][y])):
-							deposito = lista_Cont[x][y][j]
-							if count == 10:
-								break
-							lista.append(deposito)
-							count += 1
-						break
+# a cada vehiculo en especifico.
+def Dep_en_Vh(cant_Vhs, cont_Totales, lista_Vh):
+	cant_Total_Vh = [4, 10, 1]
+	for r in range(len(cant_Vhs)):
+		var = 0
+		for k in range(int(cant_Vhs[r][0])):
+			obj = Vehiculos()
+			obj.list_Depositos = []
+			obj.assign_atr(cant_Total_Vh[r])
+			for x in range(var, len(cont_Totales)):
+				if x == (cant_Total_Vh[r] + var):
+					var += cant_Total_Vh[r]
 					break
-				print(lista, "algo")
-				vh.assign_atr(cont_maximos[k], lista)
-				lista_Vh[k].append(vh)
+				obj.list_Depositos.append(cont_Totales[x])
+			lista_Vh[r].append(obj)
+	return lista_Vh
 
 # Crea el archivo json para luego utilizarlo de parte del javascript
-def jsonconvert(lista_Cont,lista_Vh):
-	lista = [[],[]]
+def jsonconvert(index, lista_Vh):
+	lista = []
+	for x in range(len(lista_Vh[index])):
+		lista.append(lista_Vh[index][x].__dict__)
+		for y in range(len(lista_Vh[index][x])):
+			lista.append(lista_Vh[index][x])
 	with open("contenedores.json", "w") as file:
-		for x in range(len(lista_Cont)):
-			for y in range(1, len(lista_Cont[0])):
-				for j in range(1, len(lista_Cont[x][y])):
-					lista[0].append(lista_Cont[x][y][j].__dict__)
-		json.dump(lista[0], file, indent=2)
+		json.dump(lista, file, indent=4)
 
 	with open("vehiculos.json", "w") as file:
 		for t in range(len(lista_Vh)):
@@ -187,5 +172,6 @@ def jsonconvert(lista_Cont,lista_Vh):
 if __name__ == "__main__":
 	lista = read_csv("MOCK_DATA.csv")
 	lista_Contenedores(lista, lista_Cont)
-	Dep_en_Vh(cant_Vh(cont_Totales(lista_Cont)), lista_Cont, lista_Vh)
-	# jsonconvert(lista_Cont, lista_Vh)
+	lista_Vehiculos = Dep_en_Vh(cant_Vh(cont_Totales(lista_Cont)[0]), cont_Totales(lista_Cont)[1], lista_Vh)
+	for index in range(len(lista_Vehiculos)):
+		jsonconvert(index, lista_Vehiculos)
