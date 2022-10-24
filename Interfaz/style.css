@@ -1,0 +1,174 @@
+html {
+    font-family: "Montserrat", sans-serif;
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    background-color: #4f4f4f;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+hr {
+    color: #fff;
+    margin-top: 0.5rem;
+}
+
+aside {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    color: white;
+    height: 630px;
+    width: 400px;
+    margin: 0 1rem;
+    transform: translateY(7.5%);
+    display: flex;
+    flex-direction: column;
+}
+
+#right {
+    justify-content: center;
+    align-items: center;
+}
+
+#right button {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+
+    margin-bottom: 1rem;
+}
+
+a {
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+aside h2 {
+    translate: 38px;
+    margin-top: 20px;
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside ul li {
+    margin: 1.5rem 0;
+}
+
+article {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+    padding: 5rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 1rem;
+    color: #fff;
+}
+
+.resultados {
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(0deg, rgba(102, 102, 102, 0.2), rgba(102, 102, 102, 0.2)), url("http://pillan.inf.uct.cl/~lrevillod/img/III.jpg");
+    background-repeat: repeat-x;
+    height: 200px;
+    border-radius: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.resultado {
+    height: 180px;
+    width: 98%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    display: none;
+}
+
+.resultados #I {
+    display: block;
+}
+
+.botones {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.div {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    width: 350px;
+    color: #fff;
+    border-radius: 0.5rem;
+    text-align: center;
+    justify-content: center;
+}
+
+.botones #I {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://pillan.inf.uct.cl/~lrevillod/img/I.jpg");
+    background-position: center;
+}
+
+.botones #II {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("http://pillan.inf.uct.cl/~lrevillod/img/II.jpeg");
+}
+
+.botones #III {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("http://pillan.inf.uct.cl/~lrevillod/img/III.jpg");
+}
+
+.botones #IV {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("http://pillan.inf.uct.cl/~lrevillod/img/IV.jpg");
+}
+
+.botones #V {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("http://pillan.inf.uct.cl/~lrevillod/img/V.jpg");
+}
+
+.botones #VI {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("http://pillan.inf.uct.cl/~lrevillod/img/VI.jpg");
+}
+
+.botones #VII {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("http://pillan.inf.uct.cl/~lrevillod/img/VII.jpg");
+}
+
+.botones #VIII {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("http://pillan.inf.uct.cl/~lrevillod/img/VIII.jpg");
+}
+
+.botones #IX {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("http://pillan.inf.uct.cl/~lrevillod/img/IX.jpg");
+}
+
+.botones #X {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("http://pillan.inf.uct.cl/~lrevillod/img/X.jpg");
+    background-repeat: repeat-x;
+    width: 100%;
+    grid-column: 1/4;
+}

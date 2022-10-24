@@ -140,7 +140,10 @@ def cant_Vh(cont_Totales):
 # a cada vehiculo en especifico.
 def Dep_en_Vh(cant_Vhs, cont_Totales, lista_Vh):
 	cant_Total_Vh = [250, 10, 1]
+	nom = ["trenes", "aviones", "camiones"]
 	for r in range(len(cant_Vhs)):
+		print(f"Cantidad total de {nom[r]} : ", int(cant_Vhs[r][0])) # cantidad
+		# total por tipo de vehiculo
 		var = 0
 		for k in range(int(cant_Vhs[r][0])):
 			obj = Vehiculos()
@@ -163,13 +166,5 @@ def jsonconvert(index, lista_Vh, nom_Vh):
 		for y in range(len(lista_Vh[index][x].list_Depositos)):
 			li.append(lista_Vh[index][x].list_Depositos[y].__dict__)
 		l_Dep["list_Depositos"] = li; lista.append(l_Dep)
-	print(lista)
 	with open(nom_Vh[index], "w") as file:
 		json.dump(lista, file, indent=4)
-
-if __name__ == "__main__":
-	lista = read_csv("MOCK_DATA.csv")
-	lista_Contenedores(lista, lista_Cont)
-	lista_Vehiculos = Dep_en_Vh(cant_Vh(cont_Totales(lista_Cont)[0]), cont_Totales(lista_Cont)[1], lista_Vh)
-	for index in range(len(lista_Vehiculos)):
-		jsonconvert(index, lista_Vehiculos, nom_Vh)
