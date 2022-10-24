@@ -8,6 +8,7 @@ lista_Cont = [
     ["refrigerado", ["solida", ], ["liquida", ], ["gas", ]],
     ["inflamable", ["solida", ], ["liquida", ], ["gas", ]]]
 
+nom_Vh = ["Trenes.json", "Aviones.json", "Camión.json"]
 # cantidad de vehiculos [0] = tren, [1] =avion, [2] = camion
 lista_Vh = [[],[],[]]
 # Leer el archivo csv (retorna una matriz en la que cada sublista
@@ -138,7 +139,7 @@ def cant_Vh(cont_Totales):
 # tambien para cada instancia agrega los contenedores correspondientes
 # a cada vehiculo en especifico.
 def Dep_en_Vh(cant_Vhs, cont_Totales, lista_Vh):
-	cant_Total_Vh = [4, 10, 1]
+	cant_Total_Vh = [250, 10, 1]
 	for r in range(len(cant_Vhs)):
 		var = 0
 		for k in range(int(cant_Vhs[r][0])):
@@ -154,13 +155,16 @@ def Dep_en_Vh(cant_Vhs, cont_Totales, lista_Vh):
 	return lista_Vh
 
 # Crea el archivo json para luego utilizarlo de parte del javascript
-def jsonconvert(index, lista_Vh):
+def jsonconvert(index, lista_Vh, nom_Vh):
 	lista = []
 	for x in range(len(lista_Vh[index])):
-		lista.append(lista_Vh[index][x].__dict__)
-		for y in range(len(lista_Vh[index][x])):
-			lista.append(lista_Vh[index][x])
-	with open("contenedores.json", "w") as file:
+		l_Dep = lista_Vh[index][x].__dict__
+		li = []
+		for y in range(len(lista_Vh[index][x].list_Depositos)):
+			li.append(lista_Vh[index][x].list_Depositos[y].__dict__)
+		l_Dep["list_Depositos"] = li; lista.append(l_Dep)
+	print(lista)
+	with open(nom_Vh[index], "w") as file:
 		json.dump(lista, file, indent=4)
 
 if __name__ == "__main__":
@@ -168,4 +172,4 @@ if __name__ == "__main__":
 	lista_Contenedores(lista, lista_Cont)
 	lista_Vehiculos = Dep_en_Vh(cant_Vh(cont_Totales(lista_Cont)[0]), cont_Totales(lista_Cont)[1], lista_Vh)
 	for index in range(len(lista_Vehiculos)):
-		jsonconvert(index, lista_Vehiculos)
+		jsonconvert(index, lista_Vehiculos, nom_Vh)
