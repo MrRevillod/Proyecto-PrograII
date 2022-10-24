@@ -1,6 +1,6 @@
 import csv
 from classes import *
-import json as js
+import json as json
 
 lista_Cont = [
     ["normal", ["solida", ], ["liquida", ], ["gas", ]],
@@ -14,14 +14,6 @@ def read_csv(x):
         line = csv.reader(c)
         lista = list(line)
     return lista
-
-def printear(lista_Vh):
-	cantidad = 0
-	for x in range(3):
-		cantidad = len(lista_Vh[x])
-		print("Cantidad de vehiculos: ", cantidad)
-		cantidad = len(lista_Vh[x])
-	print("Cantidad de vehiculos: ", cantidad)
 
 def lista_Contenedores(lista, lista_Cont):
 	peso_Max_Por_Tipo_Cont = [["normal",24000], ["refrigerado", 20000], ["inflamable",22000]]
@@ -148,7 +140,7 @@ def cant_Vh(cont_Totales):
 		return [[tren], [avion,cont_Totales], [camion]]
 
 def assing_Vh(lista_Vhs, lista_Vh):
-	print(lista_Vhs[0][0])
+	""" print(lista_Vhs[0][0]) """
 
 	for x in range(len(lista_Vhs)):
 		if x == 0 and len( lista_Vhs[x] ) != 2:
@@ -174,13 +166,42 @@ def assing_Vh(lista_Vhs, lista_Vh):
 			obj.assign_atr(lista_Vhs[x][1])
 			lista_Vh[x].append(obj)
 			
-	print(lista_Vh[1][0].nom_Vh)
-	print (lista_Vh[1][0].costo)
 
+	
+def jsonconvert(lista_Cont):
+    lista = [[],[]]
+    with open("contenedores.json", "w") as file:
+        for x in range(len(lista_Cont)):
+            for y in range(1, len(lista_Cont[0])):
+                for j in range(1, len(lista_Cont[x][y])):
+                    lista[0].append(lista_Cont[x][y][j].__dict__)
+        json.dump(lista[0], file, indent=7)
+
+
+""" Estructura JSON:
+        
+        {   
+            "person":  [  
+                {
+                    "Primer_Nombre":"Oscar",
+                    "Primer_Apellido":"Mellado",
+                    "email":"omellado@dwm.nz",
+                    "Asunto":"hola"
+                },
+                {
+                    "Primer_Nombre":"Luciano",
+                    "Primer_Apellido":"Revillod",
+                    "email":"lrevillod@dwm.nz",
+                    "Asunto":"holi"
+                }
+            ]
+        }     
+"""
 
 if __name__ == "__main__":
 	lista = read_csv("MOCK_DATA.csv")
 	lista_Contenedores(lista, lista_Cont)
 	assing_Vh(cant_Vh(cont_Totales(lista_Cont)), lista_Vh)
+	jsonconvert(lista_Cont)
 	
 	

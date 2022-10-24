@@ -22,6 +22,16 @@ class Deposito:
 		else:
 			self.tipo_Dep = "estanque"
 
+	def structure(self):
+		return	{ self.tipo_Dep: 
+								{
+									"self.id_Prod": self.id_Prod, 
+									"self.nom_Prod": self.nom_Prod, 
+									"self.tipo_Carga": self.tipo_Carga, 
+									"self.masa": self.masa, 
+									"self.peso": self.peso, 
+									"self.porte": self.porte}}
+
 @dataclass
 class Vehiculos:
 	nom_Vh = str
