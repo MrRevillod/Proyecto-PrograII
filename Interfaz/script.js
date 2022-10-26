@@ -5,47 +5,81 @@ let Avionesjson = "./Interfaz/JSON/Aviones.json";
 let Camionjson = "./Interfaz/JSON/Camiones.json";
 
 let resultados = document.getElementsByClassName("resultado");
+let botones = document.getElementsByClassName("div");
 
 let jsons = [Trenesjson, Avionesjson, Camionjson];
 let jstring = ["Trenes", "Aviones", "Camiones"];
  
-const readjson = (jsons, jstring) => {
 
-    let cantidad = [];
+function read(jsons) {
+
+    var array = [];
+
+    for (let i = 0 ; i < jsons.length ; i++){
+
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.open("GET", jsons[i], true);
+        xhttp.send();
+
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 4 && this.status == 200) {
     
-    for (let j = 0; j < jsons.length; j++) {
+                var datos = JSON.parse(this.responseText);
+                console.log(datos[0]["nom_Vh"]);
+                array.push(datos);
 
-        let contador = 0;
-
-        fetch(jsons[j])
-            .then(response => response.json())
-            .then(data => {
-                
-                for (let i = 0; i < data.length; i++) {
-                    let vehiculo = data[i];
-                    contador += 1;
-                }
-                cantidad.push([contador, jstring[j]]);
-            })
-            .catch(error => console.log(error));
+            }
         }
+        
     }
+    console.log(array[0]);
+    return array;
+    
+}
 
-let main = readjson(jsons, jstring);
+read(jsons);
 
 
-/* const EnunciadoI = (cantidad) => {
+const EnunciadoI = (array) => {
 
-    console.log(cantidad);
+    let Contador = 0;
+    /* console.log(array); */
 
-    let total = 0;
+    let lista = [1,2,3,4,5,6,7,8,9,10];
+    /* console.log(lista); */
+ 
+    for (let i = 0 ; i < array.length ; i++) {
 
-    for (let i = 0; i < cantidad.length; i++) {
-        total += cantidad[i][0];
+        Contador += array[i].length;
+        console.log(array[i].length); 
     }
+    console.log("Cantidad de vehiculos: " + Contador); 
+    
+}
 
-    console.log("El total de vehiculos es: " + total);
-} */ 
+/* EnunciadoI(read(jsons)); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* const EnunciadoII = (cantidad, resultados) => {
@@ -78,7 +112,3 @@ let main = readjson(jsons, jstring);
         resultados[1].appendChild(div);
     }
 } */
-
-/* EnunciadoI(main); */
-
-readjson(jsons, jstring);
