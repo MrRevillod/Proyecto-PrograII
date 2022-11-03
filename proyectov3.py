@@ -1,4 +1,4 @@
-import csv
+import csv, json, mysql.connector as sql
 import json
 from classes import *
 
@@ -19,6 +19,27 @@ def read_csv(x):
         line = csv.reader(c)
         lista = list(line)
     return lista
+
+def insert_into_db(lista):
+	con = sql.connect(user = "A2022_nvalenzuela",
+										password = "A2022_nvalenzuela",
+										host = "db.inf.uct.cl",
+										database = "A2022_nvalenzuela")
+	cursor = con.cursor()
+	cursor.execute("DELETE FROM csv_python")
+	con.commit()
+	for x in lista:
+		id = (x[0]); nom_prod = x[1]; tipo_dep = x[2]; masa = x[3]; peso = (x[4])
+		print(id,nom_prod, tipo_dep,masa,peso)
+		query = "INSERT INTO csv_python (id, nom_prod, tipo_dep, masa, peso) VALUES({x1}, {x2}, {x3}, {x4}, {x5})".format(x1=id, x2=nom_prod, x3=tipo_dep, x4=masa, x5=peso)
+		print(query)
+		cursor.execute(query)
+		con.commit()
+	cursor.close()
+	con.close()
+
+lista = read_csv("MOCK_DATA.csv")
+insert_into_db(lista)
 
 # Crea cada instancia de contenedor y los agrega a la lista de contenedores
 # según sus características (tipo de contenedor y masa del producto).
