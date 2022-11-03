@@ -7,7 +7,7 @@
         <title>Proyecto Programación II</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="Interfaz/style.css" />
-        <link rel="icon" href="/Interfaz/img/favicon.ico" />
+        <link rel="icon" href="/Interfaz/img/Avion.png" />
     </head>
     <body>
         <main>
@@ -31,16 +31,61 @@
                 <section class="title"> <h1>Proyecto Semestral - Programacion II</h1><hr /> </section>
 
                 <section class="resultados">
-                    <div class="resultado"></div>
-<!--                     <div class="resultado"></div>
-                    <div class="resultado"></div>
-                    <div class="resultado"></div>
-                    <div class="resultado"></div>
-                    <div class="resultado"></div>
-                    <div class="resultado"></div>
-                    <div class="resultado"></div>
-                    <div class="resultado"></div>
-                    <div class="resultado"></div> -->
+                    <div class="resultado" id="rI"></div>
+                    <div class="resultado" id="rII"></div>
+                    <div class="resultado" id="rIII">
+                        <div class="trans-btns" id="trans-buttons">
+                            <button class="transporte">Tren</button>
+                            <button class="transporte">Avión</button>
+                            <button class="transporte">Camión</button>
+                            <button class="transporte">Barco</button>
+                        </div>
+
+                        <div class="trans-conts">
+                            <form method="post" class="trans-form">
+                                <input id="inputren" class="form-input" type="text" placeholder="Buscar numero de Tren" />
+                                <button class="form-submit" type="submit" value="Buscar"></button>
+                            </form>
+                            <div class="busqueda">
+                                <ul class="busqueda-ul"></ul>
+                            </div>
+                        </div>
+
+                        <div class="trans-conts">
+                            <form method="post" class="trans-form">
+                                <input type="text" class="form-input" placeholder="Buscar numero de Avión" />
+                                <button class="form-submit" type="submit" value="Buscar"></button>
+                            </form>
+                            <div class="busqueda">
+                                <ul class="busqueda-ul"></ul>
+                            </div>
+                        </div>
+                        <div class="trans-conts">
+                            <form method="post" class="trans-form">
+                                <input type="text" class="form-input" placeholder="Buscar numero de Camión" />
+                                <button class="form-submit" type="submit" value="Buscar"></button>
+                            </form>
+                            <div class="busqueda">
+                                <ul class="busqueda-ul"></ul>
+                            </div>
+                        </div>
+                        <div class="trans-conts">
+                            <form method="post" class="trans-form">
+                                <input type="text" class="form-input" placeholder="Buscar numero de Barco" />
+                                <button class="form-submit" type="submit" value="Buscar"></button>
+                            </form>
+                            <div class="busqueda">
+                                <ul class="busqueda-ul"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resultado" id="rIV"></div>
+                    <div class="resultado" id="rV"></div>
+                    <div class="resultado" id="rVI"></div>
+                    <div class="resultado" id="rVII"></div>
+                    <div class="resultado" id="rVIII"></div>
+                    <div class="resultado" id="rIX"></div>
+                    <div class="resultado" id="rX"></div>
                 </section>
 
                 <section class="botones">
@@ -64,7 +109,6 @@
                 <div> Ver código fuente</div>
             </aside>
         </main>
-        <!-- <script src="./Interfaz/script.js"></script> -->
-        <script src="./Interfaz/script2.js"></script> 
+        <script src="./Interfaz/script2.js"></script>
     </body>
 </html>

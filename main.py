@@ -1,6 +1,7 @@
 import csv
 import json
 from classes import *
+import mysql.connector
 
 # lista ordenada para juntar y organizar los contenedores por tipo y masa
 lista_Cont = [
@@ -8,7 +9,7 @@ lista_Cont = [
     ["refrigerado", ["solida", ], ["liquida", ], ["gas", ]],
     ["inflamable", ["solida", ], ["liquida", ], ["gas", ]]]
 
-nom_Vh = ["./Interfaz/JSON/Trenes.json", "./Interfaz/JSON/Aviones.json", "./Interfaz/JSON/Camión.json"]
+nom_Vh = ["./Interfaz/JSON/Trenes.json", "./Interfaz/JSON/Aviones.json", "./Interfaz/JSON/Camiones.json"]
 # cantidad de vehiculos [0] = tren, [1] =avion, [2] = camion
 lista_Vh = [[],[],[]]
 # Leer el archivo csv (retorna una matriz en la que cada sublista
@@ -24,9 +25,11 @@ def read_csv(x):
 # según sus características (tipo de contenedor y masa del producto).
 def lista_Contenedores(lista, lista_Cont):
 	peso_Max_Por_Tipo_Cont = [
-							["normal",24000],
-							["refrigerado", 20000],
-							["inflamable",22000]]
+								["normal",24000],
+								["refrigerado", 20000],
+								["inflamable",22000]
+							]
+
 	for i in range(len(lista)):
 		peso_Prod = int(lista[i][4])
 		for x in range(len(lista_Cont)):
@@ -138,12 +141,11 @@ def cant_Vh(cont_Totales):
 # Crea las instancias de vehiculos y los agrega a la lista_Vh,
 # tambien para cada instancia agrega los contenedores correspondientes
 # a cada vehiculo en especifico.
+
 def Dep_en_Vh(cant_Vhs, cont_Totales, lista_Vh):
 	cant_Total_Vh = [250, 10, 1]
 	nom = ["trenes", "aviones", "camiones"]
 	for r in range(len(cant_Vhs)):
-		print(f"Cantidad total de {nom[r]} : ", int(cant_Vhs[r][0])) # cantidad
-		# total por tipo de vehiculo
 		var = 0
 		for k in range(int(cant_Vhs[r][0])):
 			obj = Vehiculos()
@@ -158,6 +160,7 @@ def Dep_en_Vh(cant_Vhs, cont_Totales, lista_Vh):
 	return lista_Vh
 
 # Crea el archivo json para luego utilizarlo de parte del javascript
+
 def jsonconvert(index, lista_Vh, nom_Vh):
 	lista = []
 	for x in range(len(lista_Vh[index])):
