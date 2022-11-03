@@ -110,33 +110,31 @@ const III = async (jsons, jstring, resultados) => {
             const response = await fetch(jsons[i]);
             const data = await response.json();
             let l = data.length;
-            console.log(data);
+            /* console.log(data); */
 
-            for (let j = 0; j < l; j++) {
-                let form = document.getElementsByClassName("trans-form");
-                let submits = document.getElementsByClassName("form-submit");
+            for (let j = 0; j < 4; j++) {
+                let submit = document.getElementsByClassName("form-submit");
 
-                submits[i].addEventListener("click", (e) => {
-                    e.preventDefault();
-
-                    /* let value = document.getElementsByClassName("form-input").value; */
+                submit[j].addEventListener("click", (event) => {
+                    let inputs = document.getElementsByClassName("form-input");
                     let ul = document.getElementsByClassName("busqueda-ul");
-                    let tren = document.getElementById("inputren").value;
 
-                    if (tren === j) {
-                        console.log("hola");
+                    event.preventDefault();
+                    /* console.log(inputs[j].value); */
+
+                    /* console.log(data[inputs[j].value].list_Depositos); */
+
+                    let vehiculo = data[inputs[j].value].list_Depositos;
+                    console.log(vehiculo.length);
+
+                    /* for (let k = 0; k < vehiculo.length; k++) {
                         let li = document.createElement("li");
-                        li.innerHTML = data[j].cant_Cont;
+                        li.InnerHTML = vehiculo[k];
+                        console.log(vehiculo[k]);
+                        ul[j].appendChild(li);
+                    } */
 
-                        let li2 = document.createElement("li");
-                        li2.innerHTML = data[j].nom_Vh;
-
-                        let li3 = document.createElement("li");
-                        li3.innerHTML = data[j].costo;
-
-                        ul[i].appendChild(li, li2, li3);
-                        form[i].reset();
-                    }
+                    inputs[j].value = "";
                 });
             }
         });
