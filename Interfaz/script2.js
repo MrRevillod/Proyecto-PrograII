@@ -1,9 +1,9 @@
 "use strict";
 
-let Trenesjson = "./Interfaz/JSON/Trenes.json";
-let Avionesjson = "./Interfaz/JSON/Aviones.json";
-let Camionjson = "./Interfaz/JSON/Camiones.json";
-let Barcosjson = "./Interfaz/JSON/Barcos.json";
+let Trenesjson = "/Interfaz/JSON/Trenes.json";
+let Avionesjson = "/Interfaz/JSON/Aviones.json";
+let Camionjson = "/Interfaz/JSON/Camiones.json";
+let Barcosjson = "/Interfaz/JSON/Barcos.json";
 
 let resultados = document.getElementsByClassName("resultado");
 let botones = document.getElementsByClassName("div");
@@ -91,77 +91,85 @@ const II = async (jsons, jstring, resultados) => {
 /* ------------ Enunciado III ---------- */
 
 const III = async (jsons, jstring, resultados) => {
-    /* resultados[2].innerHTML = ""; */
-    let l = jsons.length;
+	/* resultados[2].innerHTML = ""; */
+	let l = jsons.length;
 
-    let contransporte = document.getElementById("trans-buttons");
-    let transporte = document.getElementsByClassName("transporte"); /* botones */
-    let conts = document.getElementsByClassName("trans-conts"); /* contenedores */
+	let contransporte = document.getElementById("trans-buttons");
+	let transporte = document.getElementsByClassName("transporte"); /* botones */
+	let conts = document.getElementsByClassName("trans-conts"); /* contenedores */
+	let busqueda = document.getElementsByClassName("busqueda");
+	let ul = document.getElementsByClassName("busqueda-ul");
 
-    for (let i = 0; i < transporte.length; i++) {
-        transporte[i].addEventListener("click", async (e) => {
-            e.preventDefault();
+	for (let i = 0; i < transporte.length; i++) {
+		transporte[i].addEventListener("click", async (e) => {
+			e.preventDefault();
 
-            contransporte.style.display = "none";
-            if ((contransporte.style.display = "none")) {
-                conts[i].style.display = "grid";
-            }
+				contransporte.style.display = "none";
+				if ((contransporte.style.display = "none")) {
+						conts[i].style.display = "grid";
+				}
 
-            const response = await fetch(jsons[i]);
-            const data = await response.json();
-            let l = data.length;
-            /* console.log(data); */
+				const response = await fetch(jsons[i]);
+				const data = await response.json();
+				let l = data.length;
 
-            for (let j = 0; j < 4; j++) {
-                let submit = document.getElementsByClassName("form-submit");
+				for (let j = 0; j < 4; j++) {
+					let submit = document.getElementsByClassName("form-submit");
 
-                submit[j].addEventListener("click", (event) => {
-                    let inputs = document.getElementsByClassName("form-input");
-                    let ul = document.getElementsByClassName("busqueda-ul");
+					submit[j].addEventListener("click", (event) => {
+					let inputs = document.getElementsByClassName("form-input");
 
-                    event.preventDefault();
-                    /* console.log(inputs[j].value); */
+					event.preventDefault();
 
-                    /* console.log(data[inputs[j].value].list_Depositos); */
+					let vehiculo = data[inputs[j].value].list_Depositos;
 
-                    let vehiculo = data[inputs[j].value].list_Depositos;
-                    console.log(vehiculo.length);
-
-                    /* for (let k = 0; k < vehiculo.length; k++) {
-                        let li = document.createElement("li");
-                        li.InnerHTML = vehiculo[k];
-                        console.log(vehiculo[k]);
-                        ul[j].appendChild(li);
-                    } */
-
-                    inputs[j].value = "";
-                });
-            }
-        });
-    }
+					for (let k = 0; k < vehiculo.length; k++) {
+						// busqueda[j].innerHTML = `${"<li>"+vehiculo[k].nom_Prod+"</li>"}`
+						let li = document.createElement("li");
+						// li.InnerHTML = JSON.stringify(vehiculo[k]);
+						li.InnerHTML = vehiculo;
+						// console.log(JSON.stringify(vehiculo[k]));
+						ul[j].appendChild(li);
+						}
+					});
+				}
+		});
+	}
 };
+
+const total_tipo_dep = async (jsons) => {
+	t_normal = 0; t_refri = 0; t_inf = 0;
+	for (let i = 0; i < jsons.lenght; i++){
+		const promise = await fecth(jsons[i]);
+		const data = await promise.json();
+
+	}
+}
 
 /* ------------------------------------- */
 
 /* -------------- Eventos -------------- */
 
 for (let i = 0; i < botones.length; i++) {
-    botones[i].addEventListener("click", async function (event) {
-        event.preventDefault();
+	botones[i].addEventListener("click", async function (event) {
+		event.preventDefault();
 
-        let contransporte = document.getElementById("trans-buttons");
-        let transporte = document.getElementsByClassName("transporte"); /* botones */
-        let conts = document.getElementsByClassName("trans-conts"); /* contenedores */
+		let contransporte = document.getElementById("trans-buttons");
+		let transporte = document.getElementsByClassName("transporte"); /* botones */
+		let conts = document.getElementsByClassName("trans-conts"); /* contenedores */
 
-        if (i === 0) {
-            await I(jsons, resultados);
-            changedisplay(resultados, 0, contransporte, conts);
-        } else if (i === 1) {
-            await II(jsons, jstring, resultados);
-            changedisplay(resultados, 1, contransporte, conts);
-        } else if (i === 2) {
-            changedisplay(resultados, 2, contransporte, conts);
-            await III(jsons, jstring, resultados);
-        }
-    });
+		if (i === 0) {
+			await I(jsons, resultados);
+			changedisplay(resultados, 0, contransporte, conts);
+		} else if (i === 1) {
+			await II(jsons, jstring, resultados);
+			changedisplay(resultados, 1, contransporte, conts);
+		} else if (i === 2) {
+			changedisplay(resultados, 2, contransporte, conts);
+			await III(jsons, jstring, resultados);
+		} else if (i === 3) {
+			changedisplay(resultados, 2, contransporte, conts);
+			await total_tipo_dep(jsons);
+		}
+	});
 }
