@@ -26,8 +26,8 @@ if __name__ == "__main__":
 	insert_to_db(lis)
 	lista = get_information_to_db()
 	lista_Contenedores(lista, lista_Cont)
-	cant_Vh = cant_Vh(cont_Totales(lista_Cont)[0])
-	lista_Vehiculos = Dep_en_Vh(cant_Vh, cont_Totales(lista_Cont)[1], lista_Vh)
+	cant_Vhs = cant_Vh(cont_Totales(lista_Cont)[0])
+	lista_Vehiculos = Dep_en_Vh(cant_Vhs, cont_Totales(lista_Cont)[1], lista_Vh)
 	for index in range(len(lista_Vehiculos)):
 		jsonconvert(index, lista_Vehiculos, nom_Vh)
 	prints_Enunciado_1(lista_Vh)

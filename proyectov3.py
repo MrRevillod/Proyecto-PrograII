@@ -180,7 +180,7 @@ def Dep_en_Vh(cant_Vhs, cont_Totales, lista_Vh):
 	cant_Total_Vh = [250, 10, 1]
 	nom = ["trenes", "aviones", "camiones"]
 	for r in range(len(cant_Vhs)):
-		print(f"Cantidad total de {nom[r]} : ", int(cant_Vhs[r][0])) # cantidad
+		# print(f"Cantidad total de {nom[r]} : ", int(cant_Vhs[r][0])) # cantidad
 		# total por tipo de vehiculo
 		var = 0
 		for k in range(int(cant_Vhs[r][0])):
