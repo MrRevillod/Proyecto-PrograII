@@ -1,5 +1,4 @@
-import csv
-import json
+import csv, json, mysql.connector as sql
 from classes import *
 
 # lista ordenada para juntar y organizar los contenedores por tipo y masa
@@ -14,11 +13,50 @@ lista_Vh = [[],[],[]]
 # Leer el archivo csv (retorna una matriz en la que cada sublista
 # 											corresponde a un producto con todos
 # 											sus atributos). retorna todo como string
+
+user = "A2022_nvalenzuela"; host = "db.inf.uct.cl"
+pas = "A2022_nvalenzuela" ; db = "A2022_nvalenzuela"
+
 def read_csv(x):
-    with open(x, 'r') as c:
-        line = csv.reader(c)
-        lista = list(line)
-    return lista
+	with open(x, 'r') as c:
+			line = csv.reader(c)
+			lista = list(line)
+	return lista
+
+def insert_to_db(lista):
+	con = sql.connect(user = "A2022_nvalenzuela",
+										password = "A2022_nvalenzuela",
+										host = "db.inf.uct.cl",
+										database = "A2022_nvalenzuela")
+	cursor = con.cursor()
+	cursor.execute("DELETE FROM csv_python")
+	for x in lista:
+		id = int(x[0]); nom_prod = x[1]; tipo_dep = x[2]; masa = x[3]; peso = x[4]
+		query = "INSERT INTO csv_python (id, nom_prod, tipo_dep, masa, peso) VALUES ('%s', '%s', '%s', '%s', '%s')" % (id, nom_prod, tipo_dep, masa, peso)
+		cursor.execute(query)
+		con.commit()
+	cursor.close()
+	con.close()
+
+def get_information_to_db():
+	con = sql.connect(user = "A2022_nvalenzuela",
+										password = "A2022_nvalenzuela",
+										host = "db.inf.uct.cl",
+										database = "A2022_nvalenzuela")
+	cursor = con.cursor()
+	query = "SELECT * FROM csv_python"
+	cursor.execute(query)
+	lista = []
+	contador = 0
+	for (id, nom_prod, tipo_dep, masa, peso) in cursor:
+		lista.append([])
+		lista[contador].append(id)
+		lista[contador].append(nom_prod)
+		lista[contador].append(tipo_dep)
+		lista[contador].append(masa)
+		lista[contador].append(peso)
+		contador += 1
+	return lista
 
 # Crea cada instancia de contenedor y los agrega a la lista de contenedores
 # según sus características (tipo de contenedor y masa del producto).
