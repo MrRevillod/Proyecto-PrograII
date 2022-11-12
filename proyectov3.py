@@ -184,7 +184,7 @@ def Dep_en_Vh(cant_Vhs, cont_Totales, lista_Vh):
 		# total por tipo de vehiculo
 		var = 0
 		for k in range(int(cant_Vhs[r][0])):
-			obj = Vehiculos()
+			obj = Vehiculo()
 			obj.list_Depositos = []
 			obj.assign_atr(cant_Total_Vh[r])
 			for x in range(var, len(cont_Totales)):

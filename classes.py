@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-import random as ra
+from tkinter import *
+
 @dataclass
 class Deposito:
 	id_Prod = int
@@ -23,11 +24,15 @@ class Deposito:
 			self.tipo_Dep = "estanque"
 
 @dataclass
-class Vehiculos:
+class Vehiculo:
 	nom_Vh = str
 	cant_Cont = int
 	costo = int
 	list_Depositos = []
+
+#========================================================================#
+#================= Asignar atributos a cada vehiculo ====================#
+#========================================================================#
 
 	def assign_atr(self, cant_Contx):
 		self.cant_Cont = cant_Contx
@@ -37,6 +42,10 @@ class Vehiculos:
 			self.nom_Vh = "avion"; self.costo = 1000000
 		elif cant_Contx <= 1:
 			self.nom_Vh = "camion"; self.costo = 500000
+
+#========================================================================#
+#================= Imprimir enunciados de la entrega 1 ==================#
+#========================================================================#
 
 	def prints_Enunciado_1(self):
 		print(f"\nLa cantidad total de contenedores es : \
@@ -61,3 +70,95 @@ class Vehiculos:
 		for x in range(len(self.list_Depositos)):
 			tonelaje_Total += self.list_Depositos[x]["peso"]
 		print(f"El tonelaje total del vehiculo es : {tonelaje_Total}")
+
+#========================================================================#
+#============================= Entrega 2 ================================#
+#========================================================================#
+
+#========================================================================#
+#================ indice 3.1 :Lista de contenedores =====================#
+#========================================================================#
+
+	def punto_3_1(self, root):
+		l_obj_dict = []
+		for x in range(len(self.list_Depositos)):
+			l_obj_dict.append(self.list_Depositos[x].__dict__)
+		scroll = Scrollbar(root)
+		text = Text(root, height= 15, width= 80)
+		scroll.pack(side= LEFT, fill= Y)
+		text.pack(side= LEFT, fill= Y)
+		scroll.config(command= text.yview)
+		text.config(yscrollcommand= scroll.set)
+		for x in range(len(l_obj_dict)):
+			msg = str(l_obj_dict[x]).split(",")
+			id = msg[0] ; nom = msg[1] ; t_Carga = msg[2]
+			masa = msg[3] ; peso = msg[4]
+			porte = msg[5] ; t_Dep = msg[6]
+			texto = id + nom + t_Carga + masa + "\n" + peso + porte + t_Dep + "\n\n"
+			text.insert(END, texto)
+
+#========================================================================#
+#======== indice 3.2 :Cantidad total de cada tipo de contenedor =========#
+#========================================================================#
+
+	def punto_3_2(self, root):
+		scroll = Scrollbar(root)
+		l_cant_por_tipo = [0, 0, 0]
+		l_tipo_str = ["normal", "refrigerado", "inflamable"]
+		for x in range(len(self.list_Depositos)):
+			dep = self.list_Depositos[x]
+			for  y in range(len(l_tipo_str)):
+				if dep.tipo_Carga == l_tipo_str[y]:
+					l_cant_por_tipo[y] += 1
+		for x in range(len(l_tipo_str)):
+			lbl_print = Label(root, text= f"Hay {l_cant_por_tipo[x]} contenedores"
+																		f" de tipo {l_tipo_str[x]}")
+			lbl_print.pack(side= TOP)
+
+#========================================================================#
+#================ indice 3.3 :Tonelaje total de productos ===============#
+#========================================================================#
+
+	def punto_3_3(self, root):
+		tonelaje = 0
+		for x in range(len(self.list_Depositos)):
+			tonelaje += self.list_Depositos[x].peso
+		lbl_print_3 = Label(root, text= f"Tonelaje total de"
+																		f" productos es : {tonelaje}")
+		lbl_print_3.pack(side= TOP)
+
+#========================================================================#
+#================ indice 3.4 :Tonelaje por tipo de carga ================#
+#========================================================================#
+
+	def punto_3_4(self, root):
+		lis_Peso_Por_Carga = [0, 0, 0]
+		l_tipo_str = ["normal", "refrigerado", "inflamable"]
+		for x in range(len(self.list_Depositos)):
+			dep = self.list_Depositos[x]
+			for  y in range(len(l_tipo_str)):
+				if dep.tipo_Carga == l_tipo_str[y]:
+					lis_Peso_Por_Carga[y] += dep.peso
+		for x in range(len(l_tipo_str)):
+			lbl_print_4 = Label(root, text= f"Tonelaje total para contenedores"
+																			f" {l_tipo_str[x]} es :"
+																			f" {lis_Peso_Por_Carga[x]}")
+			lbl_print_4.pack(side= TOP)
+
+#========================================================================#
+#================= indice 3.5 :Tonelaje por masa ========================#
+#========================================================================#
+
+	def punto_3_5(self, root):
+		l_Peso_Por_Masa = [0, 0, 0]
+		l_Str_Por_Masa = ["solida", "liquida", "gas"]
+		for x in range(len(self.list_Depositos)):
+			dep = self.list_Depositos[x]
+			for  y in range(len(l_Str_Por_Masa)):
+				if dep.masa == l_Str_Por_Masa[y]:
+					l_Peso_Por_Masa[y] += dep.peso
+		for x in range(len(l_Str_Por_Masa)):
+			lbl_print_5 = Label(root, text= f"Tonelaje total por productos de masa"
+																			f" {l_Str_Por_Masa[x]} es :"
+																			f" {l_Peso_Por_Masa[x]}")
+			lbl_print_5.pack(side= TOP)
