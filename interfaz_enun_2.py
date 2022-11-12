@@ -5,7 +5,8 @@ lis_form_1 = [
 	["Selecciona una de las siguientes opciones :"],
 	["1 .- Cantidad total de vehículos"],
 	["2 .- Cantidad total de cada vehículo"],
-	["3 .- Selecciona uno de los vehículos a continuación :"]
+	["3 .- Selecciona uno de los vehículos a continuación : "],
+	["4 .- Costos totales de transporte"]
 ]
 
 vhs = ["trenes", "aviones", "camiones"]
@@ -45,9 +46,13 @@ def total_Por_Vh(lista_Vh, vhs):
 	lista_img = [img_tren, img_avion, img_camion]
 	window = Toplevel()
 	for x in range(len(vhs)):
-		Label(window, text= f"La cantidad total de {vhs[x]} es : {len(lista_Vh[x])}",
-					width= 30, height= 10).grid(row=0, column=x)
-		Label(window, image= lista_img[x]).grid(row= 1, column= x)
+		lbl_text = Label(window, text= f"La cantidad total de {vhs[x]} es : {len(lista_Vh[x])}",
+					width= 30, height= 10)
+		lbl_text.grid(row=0, column=x)
+
+		lbl_img = Label(window, image= lista_img[x])
+		lbl_img.grid(row= 1, column= x)
+
 
 #========================================================================#
 #================ indice 3 :Al seleccionar un vehiculo ==================#
@@ -123,20 +128,37 @@ def form_1 (option, lista_Vh, vhs, root, lis_Wid):
 		total_Por_Vh(lista_Vh, vhs)
 	elif option == 3:
 		select_vh(root, lis_Wid, lista_Vh, vhs)
+	elif option == 4:
+		indice_4_1(root, lista_Vh, lis_Wid)
+		indice_4_2(root, lista_Vh, vhs)
 
 #========================================================================#
 #================ indice 4.1 :Costo total de transporte =================#
 #========================================================================#
 
-def costo_Transporte(lista_Vh):
+def indice_4_1(root, lista_Vh, lis_Wid):
+	clean_wid(lis_Wid)
 	total_Transporte = 0
 	for x in range(len(lista_Vh)):
-		total_Transporte += lista_Vh[x].costo
-	print(total_Transporte)
+		for y in range(len(lista_Vh[x])):
+			total_Transporte += lista_Vh[x][y].costo
+	lbl_text = Label(root, text=  f"El costo total de transporte es :"
+																f"{total_Transporte}")
+	lbl_text.pack()
 
 #========================================================================#
-#================ indice 4.1 :Costo total de transporte =================#
+#============= indice 4.2 :Costo total por tipo de transporte ===========#
 #========================================================================#
+
+def indice_4_2(root, lista_Vh, vhs):
+	l_Total_Por_Tipo_Vh = [0, 0, 0]
+	for x in range(len(lista_Vh)):
+		for y in range(len(lista_Vh[x])):
+			l_Total_Por_Tipo_Vh[x] += lista_Vh[x][y].costo
+	for x in range(len(l_Total_Por_Tipo_Vh)):
+		lbl_text = Label(root, text= 	f"El costo total por {vhs[x]} es :"
+																	f" {l_Total_Por_Tipo_Vh[x]}")
+		lbl_text.pack()
 
 #========================================================================#
 #=================== Inicialización de funciones ========================#
@@ -175,6 +197,9 @@ enun2.pack(anchor= W)
 enun3 = Radiobutton(root, text= lis_form_1[3][0], value= 3, variable= var_Form)
 enun3.pack(anchor= W)
 
+enun4 = Radiobutton(root, text= lis_form_1[4][0], value= 4, variable= var_Form)
+enun4.pack(anchor= W)
+
 send_Select = Button(root, text= "Enviar", 
 										command=lambda : form_1(var_Form.get(),
 																						lista_Vh,
@@ -183,6 +208,6 @@ send_Select = Button(root, text= "Enviar",
 																						lista_widgets))
 send_Select.pack()
 
-lista_widgets = [quest_1, enun1, enun2, enun3, send_Select]
+lista_widgets = [quest_1, enun1, enun2, enun3, enun4, send_Select]
 
 root.mainloop()
