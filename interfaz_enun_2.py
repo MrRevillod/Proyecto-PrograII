@@ -36,7 +36,7 @@ def total_Vhs(lista_Vh):
 							f"{suma_total}").pack()
 
 #========================================================================#
-#============ indice 2 :Cantidad total de cada tipo de vehiculo==========#
+#============ indice 2 :Cantidad total de cada tipo de vehiculo =========#
 #========================================================================#
 
 def total_Por_Vh(lista_Vh, vhs):
@@ -89,7 +89,8 @@ def vh_selected(index, root, lista_Vh, vhs, lis_Wid_2):
 	cant_Vh = len(lista_Vh[index])
 	var_Response = IntVar()
 	lbl_quest = Label(root,
-	text= f"Hay {cant_Vh} {vhs[index]}\nQue numero de vehiculo deseas elegir: "
+	text= f"Hay {cant_Vh} {vhs[index]}\nQue numero de vehiculo deseas elegir : "
+	"(Inicia desde el 1)"
 	, justify= CENTER)
 	lbl_quest.grid(row= 2, column= 1)
 	lis_Wid_2.append(lbl_quest)
@@ -101,7 +102,7 @@ def vh_selected(index, root, lista_Vh, vhs, lis_Wid_2):
 	but_get = Button(root, text= "Obtener datos del vehiculo",
 	command= lambda : print_Vh(root,
 														index,
-														var_Response.get(),
+														(var_Response.get()-1),
 														lista_Vh,
 														lis_Wid_2))
 	but_get.grid(row= 4, column= 1)
