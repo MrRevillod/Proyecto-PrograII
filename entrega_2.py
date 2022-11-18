@@ -1,6 +1,5 @@
 from kernel import *
-import tkinter as tk
-from tkinter.ttk import *
+from tkinter import *
 
 lis_Form_1 = [
 	["Selecciona una de las siguientes opciones :"],
@@ -17,11 +16,9 @@ vhs = ["trenes", "aviones", "camiones"]
 #========================================================================#
 
 def init_tk():
-	root = tk.Tk()
+	root = Tk()
 	root.title("Proyecto de Programación II - INFO1123")
-	root.geometry('800x600+250+250')
-	style = Style(root)
-	style.configure("MyTLabel", font=("Arial", 13))
+	root.geometry('1000x600+250+250')
 	return root
 
 #========================================================================#
@@ -29,28 +26,28 @@ def init_tk():
 #========================================================================#
 
 def inter_form_1(root, lis_Form_1, lista_Vh, vhs):
-	var_Form = tk.IntVar()
+	var_Form = IntVar()
 
-	quest_1 = tk.Label(root, text= lis_Form_1[0][0], font=("Arial", 15))
+	quest_1 = Label(root, text= lis_Form_1[0][0], font=("Arial", 15))
 	quest_1.pack(anchor= CENTER)
 
-	enun1 = tk.Radiobutton(root, text= lis_Form_1[1][0], value= 1,
+	enun1 = Radiobutton(root, text= lis_Form_1[1][0], value= 1,
 											variable= var_Form, font=("Arial", 13))
 	enun1.pack(anchor= CENTER)
 
-	enun2 = tk.Radiobutton(root , text= lis_Form_1[2][0], value= 2,
+	enun2 = Radiobutton(root , text= lis_Form_1[2][0], value= 2,
 											variable= var_Form, font=("Arial", 13))
 	enun2.pack(anchor= CENTER)
 
-	enun3 = tk.Radiobutton(root, text= lis_Form_1[3][0], value= 3,
+	enun3 = Radiobutton(root, text= lis_Form_1[3][0], value= 3,
 											variable= var_Form, font=("Arial", 13))
 	enun3.pack(anchor= CENTER)
 
-	enun4 = tk.Radiobutton(root, text= lis_Form_1[4][0], value= 4,
+	enun4 = Radiobutton(root, text= lis_Form_1[4][0], value= 4,
 											variable= var_Form, font=("Arial", 13))
 	enun4.pack(anchor= CENTER)
 
-	send_Select = tk.Button(root, text= "Enviar", font=("Arial", 13),
+	send_Select = Button(root, text= "Enviar", font=("Arial", 13),
 											command=lambda : form_1(var_Form.get(),
 																							lista_Widgets,
 																							root,
@@ -84,7 +81,7 @@ def total_Vhs(root, lis_Wid, lista_Vh):
 	suma_total = 0
 	for x in range(len(lista_Vh)):
 		suma_total += len(lista_Vh[x])
-	lbl = tk.Label(root, 
+	lbl = Label(root, 
 							font= ("Arial", 15),
 							text= "La cantidad total de vehiculos para "
 										"transportar todos los productos es : "
@@ -97,17 +94,18 @@ def total_Vhs(root, lis_Wid, lista_Vh):
 
 def total_Por_Vh(root, lis_Wid, lista_Vh, vhs):
 	clean_wid(lis_Wid)
-	img_tren = PhotoImage(file= r"C:\xampp\htdocs\Proyecto-PrograII\tren.png")
-	img_avion = PhotoImage(file= "avion.png")
-	img_camion = PhotoImage(file= "camion.png")
+	img_tren = PhotoImage(file= r"C:\xampp\htdocs\Proyecto-PrograII\img\tren.png")
+	img_avion = PhotoImage(file= r"C:\xampp\htdocs\Proyecto-PrograII\img\avion.png")
+	img_camion = PhotoImage(file= r"C:\xampp\htdocs\Proyecto-PrograII\img\camion.png")
 	lista_img = [img_tren, img_avion, img_camion]
-	# for x in range(len(vhs)):
-	# 	lbl_text = Label(window, text= f"La cantidad total de {vhs[x]} es : {len(lista_Vh[x])}",
-	# 				width= 30, height= 10)
-	# 	lbl_text.grid(row=0, column=x)
+	for x in range(len(vhs)):
+		lbl_text = Label(root, text= f"La cantidad total de {vhs[x]} es : {len(lista_Vh[x])}",
+					width= 30, height= 10)
+		lbl_text.grid(row=0, column=x)
 
-	lbl_img = tk.Label(root, image= img_tren)
-	lbl_img.pack()
+		lbl_img = Label(root, image= lista_img[x])
+		lbl_img.grid(row= 1, column= x)
+	root.mainloop()
 
 
 #========================================================================#
@@ -116,22 +114,22 @@ def total_Por_Vh(root, lis_Wid, lista_Vh, vhs):
 
 def select_vh(root, lis_Wid, lista_Vh, vhs):
 	clean_wid(lis_Wid)
-	lbl_sel = tk.Label(root, text= "Elige un vehiculo : ", width= 100,
+	lbl_sel = Label(root, text= "Elige un vehiculo : ", width= 100,
 	height= 5)
 	lbl_sel.grid(row= 0,column=0, columnspan= 4)
 
 	# barco = Button(root, text= "Barco", width= 30, height= 2)
 	# barco.grid(row= 1, column= 0)
 
-	tren = tk.Button(root, text= "Tren", width= 30, height= 2,
+	tren = Button(root, text= "Tren", width= 30, height= 2,
 	command= lambda : vh_selected(0, root,lista_Vh, vhs, lis_Wid_2))
 	tren.grid(row= 1, column= 0)
 
-	avion = tk.Button(root, text= "Avion", width= 30, height= 2,
+	avion = Button(root, text= "Avion", width= 30, height= 2,
 	command= lambda : vh_selected(1, root,lista_Vh, vhs, lis_Wid_2))
 	avion.grid(row= 1, column= 1)
 
-	camion = tk.Button(root, text= "Camion", width= 30, height= 2,
+	camion = Button(root, text= "Camion", width= 30, height= 2,
 	command= lambda : vh_selected(2, root,lista_Vh, vhs, lis_Wid_2))
 	camion.grid(row= 1, column= 2)
 
@@ -143,18 +141,18 @@ def select_vh(root, lis_Wid, lista_Vh, vhs):
 
 def vh_selected(index, root, lista_Vh, vhs, lis_Wid_2):
 	cant_Vh = len(lista_Vh[index])
-	var_Response = tk.IntVar()
-	lbl_quest = tk.Label(root,
+	var_Response = IntVar()
+	lbl_quest = Label(root,
 	text= f"Hay {cant_Vh} {vhs[index]}\nQue numero de vehiculo deseas elegir: "
 	, justify= CENTER)
 	lbl_quest.grid(row= 2, column= 1)
 	lis_Wid_2.append(lbl_quest)
 	
-	response = tk.Entry(root, textvariable= var_Response)
+	response = Entry(root, textvariable= var_Response)
 	response.grid(row= 3, column= 1)
 	lis_Wid_2.append(response)
 
-	but_get = tk.Button(root, text= "Obtener datos del vehiculo",
+	but_get = Button(root, text= "Obtener datos del vehiculo",
 	command= lambda : print_Vh(root,
 														index,
 														var_Response.get(),
@@ -183,7 +181,7 @@ def indice_4_1(root, lis_Wid, lista_Vh,):
 	for x in range(len(lista_Vh)):
 		for y in range(len(lista_Vh[x])):
 			total_Transporte += lista_Vh[x][y].costo
-	lbl_text = tk.Label(root, text=  f"El costo total de transporte es :"
+	lbl_text = Label(root, text=  f"El costo total de transporte es :"
 																f"{total_Transporte}")
 	lbl_text.pack()
 
@@ -197,7 +195,7 @@ def indice_4_2(root, lista_Vh, vhs):
 		for y in range(len(lista_Vh[x])):
 			l_Total_Por_Tipo_Vh[x] += lista_Vh[x][y].costo
 	for x in range(len(l_Total_Por_Tipo_Vh)):
-		lbl_text = tk.Label(root, text= 	f"El costo total por {vhs[x]} es :"
+		lbl_text = Label(root, text= 	f"El costo total por {vhs[x]} es :"
 																	f" {l_Total_Por_Tipo_Vh[x]}")
 		lbl_text.pack()
 
