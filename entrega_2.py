@@ -95,9 +95,9 @@ def total_Vhs(root, lis_Wid, lista_Vh):
 
 def total_Por_Vh(root, lis_Wid, lista_Vh, vhs):
 	clean_wid(lis_Wid)
-	img_tren = PhotoImage(file= r"C:\xampp\htdocs\Proyecto-PrograII\img\tren.png")
-	img_avion = PhotoImage(file= r"C:\xampp\htdocs\Proyecto-PrograII\img\avion.png")
-	img_camion = PhotoImage(file= r"C:\xampp\htdocs\Proyecto-PrograII\img\camion.png")
+	img_tren = PhotoImage(file= r"./img/tren.png")
+	img_avion = PhotoImage(file= r"./img/avion.png")
+	img_camion = PhotoImage(file= r"./img/camion.png")
 	lista_img = [img_tren, img_avion, img_camion]
 	for x in range(len(vhs)):
 		lbl_text = Label(root, text= f"La cantidad total de {vhs[x]} es : {len(lista_Vh[x])}",
