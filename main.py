@@ -1,4 +1,5 @@
-import csv, json, mysql.connector as sql
+import csv
+from manipular_db import *
 from classes import *
 
 # lista ordenada para juntar y organizar los contenedores por tipo y masa
@@ -7,55 +8,15 @@ lista_Cont = [
     ["refrigerado", ["solida", ], ["liquida", ], ["gas", ]],
     ["inflamable", ["solida", ], ["liquida", ], ["gas", ]]]
 
-nom_Vh = ["Trenes.json", "Aviones.json", "Camión.json"]
-# cantidad de vehiculos [0] = tren, [1] =avion, [2] = camion
 lista_Vh = [[],[],[]]
 # Leer el archivo csv (retorna una matriz en la que cada sublista
 # 											corresponde a un producto con todos
 # 											sus atributos). retorna todo como string
 
-user = "A2022_nvalenzuela"; host = "db.inf.uct.cl"
-pas = "A2022_nvalenzuela" ; db = "A2022_nvalenzuela"
-
 def read_csv(x):
 	with open(x, 'r') as c:
 			line = csv.reader(c)
 			lista = list(line)
-	return lista
-
-def insert_to_db(lista):
-	con = sql.connect(user = "A2022_nvalenzuela",
-										password = "A2022_nvalenzuela",
-										host = "db.inf.uct.cl",
-										database = "A2022_nvalenzuela")
-	cursor = con.cursor()
-	cursor.execute("DELETE FROM csv_python")
-	for x in lista:
-		id = int(x[0]); nom_prod = x[1]; tipo_dep = x[2]; masa = x[3]; peso = x[4]
-		query = "INSERT INTO csv_python (id, nom_prod, tipo_dep, masa, peso) VALUES ('%s', '%s', '%s', '%s', '%s')" % (id, nom_prod, tipo_dep, masa, peso)
-		cursor.execute(query)
-		con.commit()
-	cursor.close()
-	con.close()
-
-def get_information_to_db():
-	con = sql.connect(user = "A2022_nvalenzuela",
-										password = "A2022_nvalenzuela",
-										host = "db.inf.uct.cl",
-										database = "A2022_nvalenzuela")
-	cursor = con.cursor()
-	query = "SELECT * FROM csv_python"
-	cursor.execute(query)
-	lista = []
-	contador = 0
-	for (id, nom_prod, tipo_dep, masa, peso) in cursor:
-		lista.append([])
-		lista[contador].append(id)
-		lista[contador].append(nom_prod)
-		lista[contador].append(tipo_dep)
-		lista[contador].append(masa)
-		lista[contador].append(peso)
-		contador += 1
 	return lista
 
 # Crea cada instancia de contenedor y los agrega a la lista de contenedores
@@ -176,33 +137,28 @@ def cant_Vh(cont_Totales):
 # Crea las instancias de vehiculos y los agrega a la lista_Vh,
 # tambien para cada instancia agrega los contenedores correspondientes
 # a cada vehiculo en especifico.
-def Dep_en_Vh(cant_Vhs, cont_Totales, lista_Vh):
+def Dep_en_Vh(cant_Vhs, lista_All_Dep, lista_Vh):
 	cant_Total_Vh = [250, 10, 1]
 	nom = ["trenes", "aviones", "camiones"]
 	for r in range(len(cant_Vhs)):
-		print(f"Cantidad total de {nom[r]} : ", int(cant_Vhs[r][0])) # cantidad
-		# total por tipo de vehiculo
 		var = 0
 		for k in range(int(cant_Vhs[r][0])):
 			obj = Vehiculos()
 			obj.list_Depositos = []
 			obj.assign_atr(cant_Total_Vh[r])
-			for x in range(var, len(cont_Totales)):
+			for x in range(var, len(lista_All_Dep)):
 				if x == (cant_Total_Vh[r] + var):
 					var += cant_Total_Vh[r]
 					break
-				obj.list_Depositos.append(cont_Totales[x])
+				obj.list_Depositos.append(lista_All_Dep[x])
 			lista_Vh[r].append(obj)
 	return lista_Vh
 
-# Crea el archivo json para luego utilizarlo de parte del javascript
-def jsonconvert(index, lista_Vh, nom_Vh):
-	lista = []
-	for x in range(len(lista_Vh[index])):
-		l_Dep = lista_Vh[index][x].__dict__
-		li = []
-		for y in range(len(lista_Vh[index][x].list_Depositos)):
-			li.append(lista_Vh[index][x].list_Depositos[y].__dict__)
-		l_Dep["list_Depositos"] = li; lista.append(l_Dep)
-	with open(nom_Vh[index], "w") as file:
-		json.dump(lista, file, indent=4)
+def run_program(lista_Cont, lista_Vh):
+	insert_to_db(read_csv("MOCK_DATA.csv"))
+	lista_Contenedores(get_list_to_db(), lista_Cont)
+	num_Total_Depositos, lista_All_Dep = cont_Totales(lista_Cont)
+	num_Vh = cant_Vh(num_Total_Depositos)
+	Dep_en_Vh(num_Vh, lista_All_Dep, lista_Vh)
+
+run_program(lista_Cont, lista_Vh)
