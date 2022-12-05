@@ -24,6 +24,8 @@ def Tkinter_Init():
 
 # __Funcion_que_genera_contenedor_principal__________________
 
+# ___Crea_un_contenedor_principal_de_4x4___
+
 
 def Init_Main_Cont(root):
     main = Frame(root, bg="grey", padx=10, pady=10)
@@ -36,8 +38,10 @@ def Init_Main_Cont(root):
 
     return main
 
+
 # __Funcion_que_vacia_el_contenedor_Main__________________
 
+# __Recorre todos los qidgets y elementos hijos del contenedor y los destruye
 
 def Clear_Main_Cont(main):
     for widget in main.winfo_children():
@@ -45,6 +49,8 @@ def Clear_Main_Cont(main):
     return
 
 # __Funcion_que_genera_contenedor_Side_Bar__________________
+
+# __Crea_un_contenedor_secundario_de_4x1__
 
 
 def Create_SideBar(root, main, Vehiculos_Txt):
@@ -55,7 +61,7 @@ def Create_SideBar(root, main, Vehiculos_Txt):
     sidebar.grid_columnconfigure(0, weight=1)
     sidebar.grid_rowconfigure((0, 1, 2, 3), weight=1)
 
-    # __Funcion_que_genera_botones__________________
+    # __Metodo_que_genera_botones_de_SideBar________________
 
     btn1 = Button(
         sidebar, text="Cant total de vehículos", padx=10, pady=10, command=lambda: Switcher(1, main, Vehiculos_Txt))
@@ -93,13 +99,16 @@ def Switcher(option, main, Vehiculos_Txt):
 
 # __Funcion_que_genera_Enunciado_I____________________________
 
+# __Debe recibir un numero X entero que represente la cantidad total de vehiculos
+
 
 def Enunciado_I(main, Vehiculos_Txt):
 
     Clear_Main_Cont(main)
     Create_SideBar(root, main, Vehiculos_Txt)
 
-    Text = " La cantidad total de Vehiculos es: "
+    #Text = f" La cantidad total de Vehiculos es: {x} "
+    Text = " La cantidad total de Vehiculos es:  "
 
     # __Metodo_que_genera_contenedor_de_Enunciado_I____________
 
@@ -113,16 +122,18 @@ def Enunciado_I(main, Vehiculos_Txt):
     Label_img = Label(main, image=img)
     Label_img.grid(row=1, column=1, columnspan=2)
 
+    return
+
 
 # __Funcion_que_genera_Enunciado_II____________________________
-
 
 def Enunciado_II(main, Vehiculos_Txt):
 
     Clear_Main_Cont(main)
     Create_SideBar(root, main, Vehiculos_Txt)
 
-    numeros = [0, 0, 0, 0]  # reemplazar con lista real
+    # reemplazar con lista real que contenga la cantidad de cada vehiculo
+    numeros = [0, 0, 0, 0]
     # Vehiculos_Txt = ["Trenes", "Aviones", "Camiones", "Barcos"]
 
     for i in range(len(numeros)):
