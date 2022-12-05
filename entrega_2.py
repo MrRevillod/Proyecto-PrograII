@@ -1,4 +1,4 @@
-from kernel import *
+from main import *
 from tkinter import *
 
 lis_Form_1 = [
