@@ -1,236 +1,228 @@
 from kernel import *
 from tkinter import *
 
-lis_Form_1 = [
-    ["Selecciona una de las siguientes opciones :"],
-    ["1 .- Cantidad total de vehículos"],
-    ["2 .- Cantidad total de cada vehículo"],
-    ["3 .- Selecciona uno de los vehículos a continuación : "],
-    ["4 .- Costos totales de transporte"]
-]
 
-vhs = ["trenes", "aviones", "camiones"]
+TextList = ["Cantidad total de vehículos", "Cantidad total de cada vehículo",
+            "Selecciona uno de los vehículos", "Costos totales de transporte"]
 
-# ========================================================================#
-# ==================== Iniciar ventana principal tkinter =================#
-# ========================================================================#
+Trans_Names = ["trenes", "aviones", "camiones", "barcos"]
+
+# __Funcion_Init_____________________________________________
 
 
-def init_tk():
+def Tkinter_Init():
     root = Tk()
     root.title("Proyecto de Programación II - INFO1123")
     root.geometry('1000x600+250+250')
-    root['bg'] = '#0088b6'
+    root['bg'] = 'grey'
+    root.resizable(False, False)
+
+    # __ grid layout (4x4) ____________
+    root.grid_columnconfigure(1, weight=1)
+    root.grid_rowconfigure((0, 1, 2), weight=1)
     return root
 
-# ========================================================================#
-# ==================== Formulario principal interfaz =====================#
-# ========================================================================#
+# __Funcion_que_genera_contenedor_principal__________________
 
 
-def inter_form_1(root, lis_Form_1, lista_Vh, vhs):
-    var_Form = IntVar()
+def Init_Main_Cont(root):
+    main = Frame(root, bg="grey", padx=10, pady=10)
+    main.grid(row=0, column=1, rowspan=3, sticky="nsew")
 
-    quest_1 = Label(root, text=lis_Form_1[0][0], font=(
-        "Arial", 15), bg="#0088b6")
-    quest_1.pack(anchor=CENTER)
+    # __Grid_layout_(4x4)_____________
 
-    enun1 = Radiobutton(root, text=lis_Form_1[1][0], value=1, bg="#0088b6",
-                        variable=var_Form, font=("Arial", 13))
-    enun1.pack(anchor=CENTER)
+    main.grid_columnconfigure((0, 1, 2, 3), weight=1)
+    main.grid_rowconfigure((0, 1, 2, 3), weight=1)
 
-    enun2 = Radiobutton(root, text=lis_Form_1[2][0], value=2, bg="#0088b6",
-                        variable=var_Form, font=("Arial", 13))
-    enun2.pack(anchor=CENTER)
+    return main
 
-    enun3 = Radiobutton(root, text=lis_Form_1[3][0], value=3, bg="#0088b6",
-                        variable=var_Form, font=("Arial", 13))
-    enun3.pack(anchor=CENTER)
-
-    enun4 = Radiobutton(root, text=lis_Form_1[4][0], value=4, bg="#0088b6",
-                        variable=var_Form, font=("Arial", 13))
-    enun4.pack(anchor=CENTER)
-
-    send_Select = Button(root, text="Enviar", font=("Arial", 13), bg="#0088b6",
-                         command=lambda: form_1(var_Form.get(),
-                                                lista_Widgets,
-                                                root,
-                                                lista_Vh,
-                                                vhs))
-    send_Select.pack()
-
-    lista_Widgets = [quest_1, enun1, enun2, enun3, enun4, send_Select]
-
-# ========================================================================#
-# ==== Seleccionar las funcionas correspondientes a las seleccionadas ====#
-# ========================================================================#
+# __Funcion_que_vacia_el_contenedor_Main__________________
 
 
-def form_1(option, lis_Wid, root, lista_Vh, vhs):
+def Clear_Main_Cont(main):
+    for widget in main.winfo_children():
+        widget.destroy()
+    return
+
+# __Funcion_que_genera_contenedor_Side_Bar__________________
+
+
+def Create_SideBar(root, main, Vehiculos_Txt):
+
+    sidebar = Frame(root, bg="grey", padx=10, pady=10)
+    sidebar.grid(row=0, column=0, rowspan=3, sticky="nsew")
+
+    sidebar.grid_columnconfigure(0, weight=1)
+    sidebar.grid_rowconfigure((0, 1, 2, 3), weight=1)
+
+    # __Funcion_que_genera_botones__________________
+
+    btn1 = Button(
+        sidebar, text="Cant total de vehículos", padx=10, pady=10, command=lambda: Switcher(1, main, Vehiculos_Txt))
+    btn1.grid(row=0, column=0, sticky="nsew")
+
+    btn2 = Button(
+        sidebar, text="Cant total de cada vehículo", padx=10, pady=10, command=lambda: Switcher(2, main, Vehiculos_Txt))
+    btn2.grid(row=1, column=0, sticky="nsew")
+
+    btn3 = Button(
+        sidebar, text="Seleccionar un Vehiculo", padx=10, pady=10, command=lambda: Switcher(3, main, Vehiculos_Txt))
+    btn3.grid(row=2, column=0, sticky="nsew")
+
+    btn4 = Button(
+        sidebar, text="Costo total de los vehículos", padx=10, pady=10, command=lambda: Switcher(4, main, Vehiculos_Txt))
+    btn4.grid(row=3, column=0, sticky="nsew")
+
+    return
+
+
+# __Funcion_Switcher__________________________________________
+
+def Switcher(option, main, Vehiculos_Txt):
+
     if option == 1:
-        total_Vhs(root, lis_Wid, lista_Vh)
+        Enunciado_I(main, Vehiculos_Txt)
     elif option == 2:
-        total_Por_Vh(root, lis_Wid, lista_Vh, vhs)
+        Enunciado_II(main, Vehiculos_Txt)
     elif option == 3:
-        select_vh(root, lis_Wid, lista_Vh, vhs)
+        Enunciado_III(main, Vehiculos_Txt)
     elif option == 4:
-        indice_4_1(root, lis_Wid, lista_Vh)
-        indice_4_2(root, lista_Vh, vhs)
+        Enunciado_IV_I(main, Vehiculos_Txt)
+        #Enunciado_IV_II(main, Vehiculos_Txt)
+    return
 
-# ========================================================================#
-# ================ indice 1 : Cantidad total de vehiculos ================#
-# ========================================================================#
-
-
-def total_Vhs(root, lis_Wid, lista_Vh):
-    clean_wid(lis_Wid)
-    suma_total = 0
-    for x in range(len(lista_Vh)):
-        suma_total += len(lista_Vh[x])
-    lbl = Label(root, bg="#0088b6",
-                font=("Arial", 15),
-                text="La cantidad total de vehiculos para "
-                "transportar todos los productos es : "
-                f"{suma_total}")
-    lbl.grid(column=0, row=0, padx=10, pady=10)
-
-# ========================================================================#
-# ============ indice 2 :Cantidad total de cada tipo de vehiculo==========#
-# ========================================================================#
+# __Funcion_que_genera_Enunciado_I____________________________
 
 
-def total_Por_Vh(root, lis_Wid, lista_Vh, vhs):
-    clean_wid(lis_Wid)
-    img_tren = PhotoImage(file=r"./img/tren.png")
-    img_avion = PhotoImage(file=r"./img/avion.png")
-    img_camion = PhotoImage(file=r"./img/camion.png")
-    lista_img = [img_tren, img_avion, img_camion]
-    for x in range(len(vhs)):
-        lbl_text = Label(root, text=f"La cantidad total de {vhs[x]} es : {len(lista_Vh[x])}",
-                         width=30, height=10, bg="#0088b6")
-        lbl_text.grid(row=0, column=x)
+def Enunciado_I(main, Vehiculos_Txt):
 
-        lbl_img = Label(root, image=lista_img[x])
-        lbl_img.grid(row=1, column=x)
-    root.mainloop()
+    Clear_Main_Cont(main)
+    Create_SideBar(root, main, Vehiculos_Txt)
 
+    Text = " La cantidad total de Vehiculos es: "
 
-# ========================================================================#
-# ================ indice 3 :Al seleccionar un vehiculo ==================#
-# ========================================================================#
+    # __Metodo_que_genera_contenedor_de_Enunciado_I____________
 
-def select_vh(root, lis_Wid, lista_Vh, vhs):
-    clean_wid(lis_Wid)
-    lbl_sel = Label(root, text="Elige un vehiculo : ", width=100, bg="#0088b6",
-                    height=5, font=("Arial", 13))
-    lbl_sel.grid(row=0, column=0, columnspan=4)
+    Label_I = Label(main, text=Text, font=("Arial", 15), bg="grey",
+                    padx=5, pady=5, width=50, height=10)
+    Label_I.grid(row=0, column=1, columnspan=2, sticky="nsew")
 
-    # barco = Button(root, text= "Barco", width= 30, height= 2)
-    # barco.grid(row= 1, column= 0)
+    # __Metodo_que_genera_contenedor_para_imagen____________
 
-    tren = Button(root, text="Tren", width=30, height=2, font=("Arial", 13),
-                  command=lambda: vh_selected(0, root, lista_Vh, vhs, lis_Wid_2), bg="#0088b6")
-    tren.grid(row=1, column=0)
-
-    avion = Button(root, text="Avion", width=30, height=2, font=("Arial", 13),
-                   command=lambda: vh_selected(1, root, lista_Vh, vhs, lis_Wid_2), bg="#0088b6")
-    avion.grid(row=1, column=1)
-
-    camion = Button(root, text="Camion", width=30, height=2, font=("Arial", 13),
-                    command=lambda: vh_selected(2, root, lista_Vh, vhs, lis_Wid_2), bg="#0088b6")
-    camion.grid(row=1, column=2)
-
-    lis_Wid_2 = [lbl_sel, tren, avion, camion]
-
-# ========================================================================#
-# ====== Mostrar Cantidad de vehiculos para el tipo seleccionado =========#
-# ========================================================================#
+    img = PhotoImage(file="./img/vehicles.png")
+    Label_img = Label(main, image=img)
+    Label_img.grid(row=1, column=1, columnspan=2)
 
 
-def vh_selected(index, root, lista_Vh, vhs, lis_Wid_2):
-    cant_Vh = len(lista_Vh[index])
-    var_Response = IntVar()
-    lbl_quest = Label(root, font=("Arial", 13), bg="#0088b6",
-                      text=f"Hay {cant_Vh} {vhs[index]}\nQue numero de vehiculo deseas elegir: ", justify=CENTER)
-    lbl_quest.grid(row=2, column=1)
-    lis_Wid_2.append(lbl_quest)
-
-    response = Entry(root, font=("Arial", 13), bg="#0088b6",
-                     textvariable=var_Response)
-    response.grid(row=3, column=1)
-    lis_Wid_2.append(response)
-
-    but_get = Button(root, text="Obtener datos del vehiculo", font=("Arial", 13),
-                     command=lambda: print_Vh(root,
-                                              index,
-                                              var_Response.get(),
-                                              lista_Vh,
-                                              lis_Wid_2), bg="#0088b6")
-    but_get.grid(row=4, column=1)
-    lis_Wid_2.append(but_get)
+# __Funcion_que_genera_Enunciado_II____________________________
 
 
-def print_Vh(root, index, index_2, lista_Vh, lis_Wid_2):
-    clean_wid(lis_Wid_2)
-    vh = lista_Vh[index][index_2 - 1]
+def Enunciado_II(main, Vehiculos_Txt):
 
-    vh.punto_3_1(root)
-    vh.punto_3_2(root)
-    vh.punto_3_3(root)
-    vh.punto_3_4(root)
-    vh.punto_3_5(root)
+    Clear_Main_Cont(main)
+    Create_SideBar(root, main, Vehiculos_Txt)
 
-# ========================================================================#
-# ================ indice 4.1 :Costo total de transporte =================#
-# ========================================================================#
+    numeros = [0, 0, 0, 0]  # reemplazar con lista real
+    # Vehiculos_Txt = ["Trenes", "Aviones", "Camiones", "Barcos"]
 
+    for i in range(len(numeros)):
+        Texto = f"La cantidad de {Vehiculos_Txt[i]} es: {numeros[i]}"
 
-def indice_4_1(root, lis_Wid, lista_Vh,):
-    clean_wid(lis_Wid)
-    total_Transporte = 0
-    for x in range(len(lista_Vh)):
-        for y in range(len(lista_Vh[x])):
-            total_Transporte += lista_Vh[x][y].costo
-    lbl_text = Label(root, font=("Arial", 13), bg="#0088b6",
-                     text=f"El costo total de transporte es :"
-                     f"{total_Transporte}")
-    lbl_text.pack()
+        # __LEFT____________________________________________________
 
-# ========================================================================#
-# ============= indice 4.2 :Costo total por tipo de transporte ===========#
-# ========================================================================#
+        Label_II = Label(main, text=Texto, font=("Arial", 10),
+                         bg="grey", padx=0, pady=50, width=10, height=50, background="white", borderwidth=4, relief="groove", )
 
+        Label_II.grid(row=i, column=0, columnspan=1, sticky="nsew")
 
-def indice_4_2(root, lista_Vh, vhs):
-    l_Total_Por_Tipo_Vh = [0, 0, 0]
-    for x in range(len(lista_Vh)):
-        for y in range(len(lista_Vh[x])):
-            l_Total_Por_Tipo_Vh[x] += lista_Vh[x][y].costo
-    for x in range(len(l_Total_Por_Tipo_Vh)):
-        lbl_text = Label(root, font=("Arial", 13), bg="#0088b6",
-                         text=f"El costo total por {vhs[x]} es :"
-                         f" {l_Total_Por_Tipo_Vh[x]}")
-        lbl_text.pack()
+        # __MIDD____________________________________________________
 
-# ========================================================================#
-# ====================== Limpiar ventana de Widgets ======================#
-# ========================================================================#
+        Label_II_arrow = Label(main, text="->", font=("Arial", 20),
+                               bg="grey", padx=0, pady=50, width=10, height=50, background="white", borderwidth=4, relief="groove")
+
+        Label_II_arrow.grid(row=i, column=1, columnspan=2, sticky="nsew")
+
+        # __RIGHT____________________________________________________
+
+        Label_II_Img = Label(main, text=Vehiculos_Txt[i], font=("Arial", 10),
+                             bg="grey", padx=0, pady=50, width=10, height=50, background="white", borderwidth=4, relief="groove")
+
+        Label_II_Img.grid(row=i, column=3, columnspan=1, sticky="nsew")
+
+# __Funcion_que_genera_Enunciado_III____________________________
 
 
-def clean_wid(lis_Wid):
-    for x in range(len(lis_Wid)):
-        lis_Wid[x].destroy()
+def Enunciado_III(main, Vehiculos_Txt):
 
-# ========================================================================#
-# =================== Inicialización de funciones ========================#
-# ========================================================================#
+    Clear_Main_Cont(main)
+    Create_SideBar(root, main, Vehiculos_Txt)
+
+    # __Metodo_que_genera_EL_TITULO_de_Enunciado_III____________
+
+    Label_III = Label(main, text="Seleccionar un tipo de vehiculo", font=("Arial", 15), bg="grey",
+                      width=50, height=0)
+    Label_III.grid(row=0, column=1, columnspan=2, sticky="nsew")
+
+    # __Metodo_que_genera_4_BOTONES___________
+
+    Label_btns = Label(main, bg="grey", width=100,
+                       height=10, background="black")
+    Label_btns.grid(row=1, column=1, columnspan=2, sticky="n")
+
+    Tren = Button(
+        Label_btns, text="Tren", width=15, height=2, borderwidth=2)
+    Tren.grid(row=1, column=0, rowspan=1, sticky="new")
+
+    Avion = Button(
+        Label_btns, text="Avion", width=15, height=2, borderwidth=2)
+    Avion.grid(row=1, column=1, rowspan=1, sticky="new")
+
+    Camion = Button(
+        Label_btns, text="Camion", width=15, height=2, borderwidth=2)
+    Camion.grid(row=1, column=2, rowspan=1, sticky="new")
+
+    Barco = Button(
+        Label_btns, text="Barco", width=15, height=2, borderwidth=2)
+    Barco.grid(row=1, column=3, rowspan=1, sticky="new")
+
+
+def Enunciado_III_Input(main):
+
+    Input_Box = Entry(main, width=50, borderwidth=5)
+    Input_Box.grid(row=2, column=1, columnspan=2, sticky="nsew")
+
+    # __Funcion_que_genera_Enunciado_IV_I____________________________
+
+
+def Enunciado_IV_I(main, Vehiculos_Txt):
+
+    Clear_Main_Cont(main)
+    Create_SideBar(root, main, Vehiculos_Txt)
+
+    # __Metodo_que_genera_contenedor_de_Enunciado_I____________
+
+    Label_IV = Label(main, text="El costo total corresponde a: ", font=("Arial", 15), bg="grey",
+                     padx=5, pady=5, width=50, height=10)
+    Label_IV.grid(row=0, column=1, columnspan=2, sticky="nsew")
+
+# __Funcion_que_genera_Enunciado_IV_II____________________________
+
+
+def Enunciado_IV_II(main, Vehiculos_Txt):
+
+    Clear_Main_Cont(main)
+    Create_SideBar(root, main, Vehiculos_Txt)
+
+ # __Ejecucion_Principal________________________________________
 
 
 if __name__ == "__main__":
-    lista = read_csv("MOCK_DATA.csv")
-    lista_Contenedores(lista, lista_Cont)
-    cant_Vhs = cant_Vh(cont_Totales(lista_Cont)[0])
-    Dep_en_Vh(cant_Vhs, cont_Totales(lista_Cont)[1], lista_Vh)
-    root = init_tk()
-    inter_form_1(root, lis_Form_1, lista_Vh, vhs)
+
+    Vehiculos_Txt = ["Trenes", "Aviones", "Camiones", "Barcos"]
+
+    root = Tkinter_Init()
+    main = Init_Main_Cont(root)
+
+    Create_SideBar(root, main, Vehiculos_Txt)
+    main.mainloop()
     root.mainloop()
