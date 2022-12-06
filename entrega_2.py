@@ -5,7 +5,7 @@ from tkinter import *
 TextList = ["Cantidad total de vehículos", "Cantidad total de cada vehículo",
             "Selecciona uno de los vehículos", "Costos totales de transporte"]
 
-Trans_Names = ["trenes", "aviones", "camiones", "barcos"]
+Trans_Names = ["Barcos", "Trenes", "Camiones", "Aviones"]
 
 # __Funcion_Init_____________________________________________
 
@@ -181,11 +181,11 @@ def Enunciado_III(main, Vehiculos_Txt):
     Label_btns.grid(row=1, column=1, columnspan=2, sticky="n")
 
     Tren = Button(
-        Label_btns, text="Tren", width=15, height=2, borderwidth=2)
+        Label_btns, text="Barco", width=15, height=2, borderwidth=2)
     Tren.grid(row=1, column=0, rowspan=1, sticky="new")
 
     Avion = Button(
-        Label_btns, text="Avion", width=15, height=2, borderwidth=2)
+        Label_btns, text="Tren", width=15, height=2, borderwidth=2)
     Avion.grid(row=1, column=1, rowspan=1, sticky="new")
 
     Camion = Button(
@@ -193,7 +193,7 @@ def Enunciado_III(main, Vehiculos_Txt):
     Camion.grid(row=1, column=2, rowspan=1, sticky="new")
 
     Barco = Button(
-        Label_btns, text="Barco", width=15, height=2, borderwidth=2)
+        Label_btns, text="Avion", width=15, height=2, borderwidth=2)
     Barco.grid(row=1, column=3, rowspan=1, sticky="new")
 
 
@@ -229,7 +229,7 @@ def Enunciado_IV_II(main, Vehiculos_Txt):
 
 if __name__ == "__main__":
 
-    Vehiculos_Txt = ["Trenes", "Aviones", "Camiones", "Barcos"]
+    Vehiculos_Txt = ["Barcos", "Trenes", "Camiones", "Aviones"]
 
     root = Tkinter_Init()
     main = Init_Main_Cont(root)
