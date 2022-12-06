@@ -89,7 +89,6 @@ def cont_Totales(lis_Depositos):
 # función Dep_en_Vh.
 
 def cant_Vh(cont_Totales, Pbarco, Ptren, Pavion, Pcamion):
-	print(cont_Totales)
 	PrecioPorDep1 = Pbarco / 24000
 	PrecioPorDep2 = Ptren  / 250
 	PrecioPorDep3 = Pavion / 10
@@ -116,10 +115,6 @@ def cant_Vh(cont_Totales, Pbarco, Ptren, Pavion, Pcamion):
 		resto, NAvion  = VhRentable2(resto, 10, "avion", lis, NAvion)
 		resto, NCamion = VhRentable2(resto, 1, "camion", lis, NCamion)
 		resto, NCamion = VhRentable2(resto, 1, "camion", lis, NCamion)
-	print(NBarco, "numero de barcos")
-	print(NTren, "numero de trenes")
-	print(NAvion, "numero de aviones")
-	print(NCamion, "numero de camiones")
 	matriz = [[NBarco, Pbarco], [NTren, Ptren], [NAvion, Pavion], [NCamion, Pcamion]]
 	return matriz
 
@@ -145,6 +140,7 @@ def Dep_en_Vh(NumVhs, peso_Dep, index,  matriz, lista_All_Dep, lista_Vh):
 	var = 0
 	for x in range(int(NumVhs)):
 		obj = Vehiculo()
+		obj.list_Depositos = []
 		obj.assign_atr(peso_Dep, matriz[index][1])
 		for y in range(var, len(lista_All_Dep)):
 			if y == (peso_Dep + var):
@@ -152,4 +148,4 @@ def Dep_en_Vh(NumVhs, peso_Dep, index,  matriz, lista_All_Dep, lista_Vh):
 				break
 			obj.list_Depositos.append(lista_All_Dep[y])
 		lista_Vh[index].append(obj)
-	return lista_Vh
+	print(len(lista_Vh[1]))

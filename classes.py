@@ -81,12 +81,14 @@ class Vehiculo:
 #================ indice 3.1 :Lista de contenedores =====================#
 #========================================================================#
 
-	def punto_3_1(self, root):
+	def punto_3_1(self, main):
+		print(len(self.list_Depositos))
 		l_obj_dict = []
 		for x in range(len(self.list_Depositos)):
 			l_obj_dict.append(self.list_Depositos[x].__dict__)
-		scroll = Scrollbar(root)
-		text = Text(root, height= 15, width= 80)
+		print(len(l_obj_dict))
+		scroll = Scrollbar(main)
+		text = Text(main, height= 15, width= 60,bg="grey")
 		scroll.pack(side= LEFT, fill= Y)
 		text.pack(side= LEFT, fill= Y)
 		scroll.config(command= text.yview)
@@ -96,7 +98,7 @@ class Vehiculo:
 			id = msg[0] ; nom = msg[1] ; t_Carga = msg[2]
 			masa = msg[3] ; peso = msg[4]
 			porte = msg[5] ; t_Dep = msg[6]
-			texto = id + nom + t_Carga + masa + "\n" + peso + porte + t_Dep + "\n\n"
+			texto = id + nom + "\n" + t_Carga + masa + "\n" + peso + porte + "\n" + t_Dep + "\n\n\n"
 			text.insert(END, texto)
 
 #========================================================================#
@@ -114,7 +116,7 @@ class Vehiculo:
 					l_cant_por_tipo[y] += 1
 		for x in range(len(l_tipo_str)):
 			lbl_print = Label(root, text= f"Hay {l_cant_por_tipo[x]} contenedores"
-																		f" de tipo {l_tipo_str[x]}")
+																		f" de tipo {l_tipo_str[x]}",bg="grey")
 			lbl_print.pack(side= TOP)
 
 #========================================================================#
@@ -126,7 +128,7 @@ class Vehiculo:
 		for x in range(len(self.list_Depositos)):
 			tonelaje += self.list_Depositos[x].peso
 		lbl_print_3 = Label(root, text= f"Tonelaje total de"
-																		f" productos es : {tonelaje}")
+																		f" productos es : {tonelaje}",bg="grey")
 		lbl_print_3.pack(side= TOP)
 
 #========================================================================#
@@ -144,7 +146,7 @@ class Vehiculo:
 		for x in range(len(l_tipo_str)):
 			lbl_print_4 = Label(root, text= f"Tonelaje total para contenedores"
 																			f" {l_tipo_str[x]} es :"
-																			f" {lis_Peso_Por_Carga[x]}")
+																			f" {lis_Peso_Por_Carga[x]}",bg="grey")
 			lbl_print_4.pack(side= TOP)
 
 #========================================================================#
@@ -162,5 +164,5 @@ class Vehiculo:
 		for x in range(len(l_Str_Por_Masa)):
 			lbl_print_5 = Label(root, text= f"Tonelaje total por productos de masa"
 																			f" {l_Str_Por_Masa[x]} es :"
-																			f" {l_Peso_Por_Masa[x]}")
+																			f" {l_Peso_Por_Masa[x]}",bg="grey")
 			lbl_print_5.pack(side= TOP)
