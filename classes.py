@@ -34,14 +34,16 @@ class Vehiculo:
 #================= Asignar atributos a cada vehiculo ====================#
 #========================================================================#
 
-	def assign_atr(self, cant_Contx):
+	def assign_atr(self, cant_Contx, precio):
 		self.cant_Cont = cant_Contx
-		if cant_Contx >= 250:
-			self.nom_Vh = "tren"; self.costo = 10000000
+		if cant_Contx >= 24000:
+			self.nom_Vh = "barco" ; self.costo = precio
+		elif cant_Contx >= 250:
+			self.nom_Vh = "tren"; self.costo = precio
 		elif cant_Contx >= 2:
-			self.nom_Vh = "avion"; self.costo = 1000000
+			self.nom_Vh = "avion"; self.costo = precio
 		elif cant_Contx <= 1:
-			self.nom_Vh = "camion"; self.costo = 500000
+			self.nom_Vh = "camion"; self.costo = precio
 
 #========================================================================#
 #================= Imprimir enunciados de la entrega 1 ==================#

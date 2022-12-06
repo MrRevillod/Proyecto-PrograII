@@ -3,12 +3,11 @@ from manipular_db import *
 from classes import *
 
 # lista ordenada para juntar y organizar los contenedores por tipo y masa
-lista_Cont = [
-    ["normal", ["solida", ], ["liquida", ], ["gas", ]],
-    ["refrigerado", ["solida", ], ["liquida", ], ["gas", ]],
-    ["inflamable", ["solida", ], ["liquida", ], ["gas", ]]]
+lis_Cont_N = [[],[],[]]
+lis_Cont_R = [[],[],[]]
+lis_Cont_I = [[],[],[]]
 
-lista_Vh = [[],[],[]]
+lista_Vh = [[],[],[],[]]
 # Leer el archivo csv (retorna una matriz en la que cada sublista
 # 											corresponde a un producto con todos
 # 											sus atributos). retorna todo como string
@@ -22,43 +21,25 @@ def read_csv(x):
 # Crea cada instancia de contenedor y los agrega a la lista de contenedores
 # según sus características (tipo de contenedor y masa del producto).
 
-def lista_Contenedores(lista, lista_Cont):
-	peso_Max_Por_Tipo_Cont = [
-							["normal",24000],
-							["refrigerado", 20000],
-							["inflamable",22000]]
-	for i in range(len(lista)):
-		peso_Prod = int(lista[i][4])
-		for x in range(len(lista_Cont)):
-			if lista[i][2] == lista_Cont[x][0]:
-				for j in range(len(lista_Cont[0])):
-					if lista[i][3] == lista_Cont[x][j][0]:
-						for t in range(len(peso_Max_Por_Tipo_Cont)):
-							if lista[i][2] == peso_Max_Por_Tipo_Cont[t][0]:
-								pesomax = peso_Max_Por_Tipo_Cont[t][1]
-								arr = cant_Cont(peso_Prod, pesomax)
-								for g in range(arr[0]):
-									obj = Deposito()
-									obj.atributos(int(lista[i][0]), lista[i][1],
-																lista[i][2], lista[i][3],
-																pesomax, "grande")
-									lista_Cont[x][j].append(obj)
-								if arr[1][1] != 0:
-									if len(arr) == 3:
-										obj = Deposito()
-										obj.atributos(int(lista[i][0]), lista[i][1],
-																	lista[i][2], lista[i][3],
-																	arr[1][1], "pequeno")
-										lista_Cont[x][j].append(obj)
-									else:
-										obj = Deposito()
-										obj.atributos(int(lista[i][0]), lista[i][1],
-																	lista[i][2], lista[i][3],
-																	arr[1][1], "grande")
-										lista_Cont[x][j].append(obj)
-						break
-			else:
-				continue
+def llenar_lista_Contenedores(lista, lista_Cont, index, tipo_Cont, masax, pesom):
+	peso_Max = pesom
+	for id, nom, tipo_C, masa, pesO	in lista:
+		peso = int(pesO)
+		num_Dep = cant_Cont(peso, peso_Max)
+		if tipo_C == tipo_Cont and masa == masax:
+			for x in range(num_Dep[0]):
+				obj = Deposito()
+				obj.atributos(int(id), nom, tipo_C, masa, peso_Max, "grande")
+				lista_Cont[index].append(obj)
+			if num_Dep[1][1] != 0:
+				if len(num_Dep) == 3:
+					obj = Deposito()
+					obj.atributos(int(id), nom, tipo_C, masa, num_Dep[1][1], "pequeño")
+					lista_Cont[index].append(obj)
+				else:
+					obj = Deposito()
+					obj.atributos(int(id), nom, tipo_C, masa, num_Dep[1][1], "grande")
+					lista_Cont[index].append(obj)
 	return
 
 # Esta función se utiliza para sacar la cantida de contenedores grandes
@@ -91,112 +72,84 @@ def cant_Cont(pesox, pesomax):
 # mitad del espacio que los grandes, por lo que en vez de contar
 # como un entero, cada uno vale 0.5 respecto de uno grande
 
-def cont_Totales(lista_Cont):
+def cont_Totales(lis_Depositos):
 	cantidad_Total = float(0)
 	lista = []
-	for x in range(len(lista_Cont)):
-		for y in range(1, len(lista_Cont[0])):
-			for j in range(1, len(lista_Cont[x][y])):
-				lista.append(lista_Cont[x][y][j])
-				if lista_Cont[x][y][j].porte == "pequeno":
-					cantidad_Total += 0.5
-				elif lista_Cont[x][y][j].porte == "grande":
-					cantidad_Total += 1
+	for x in range(len(lis_Depositos)):
+		for y in range(len(lis_Depositos[x])):
+			lista.append(lis_Depositos[x][y])
+			if lis_Depositos[x][y].porte == "pequeño":
+				cantidad_Total += 0.5
+			elif lis_Depositos[x][y].porte == "grande":
+				cantidad_Total += 1
 	return [cantidad_Total, lista]
 
 # retorna una lista con la cantidad de vehiculos, si hay un resto
 # se le asigna al vehiculo correspondiente, esto se utiliza en la
 # función Dep_en_Vh.
 
-def get_precio():
-	# Pbarco = input("Precio Barco: ")
-	# Ptren = input("Precio Tren: ")
-	# Pavion = input("Precio Avion: ")
-	# Pcamion = input("Precio Camion: ")
-	Pbarco = 1000000000; Ptren = 10000000
-	Pavion = 1000000 ; Pcamion = 500000
-	div_Pbarco  = Pbarco  / 24000
-	div_Ptren   = Ptren   / 250
-	div_Pavion  = Pavion  / 10
-	div_Pcamion = Pcamion
-	return [[div_Pbarco, div_Ptren, div_Pavion, div_Pcamion],
-					[24000, 250, 10, 1],
-					["barco", "tren", "avion", "camion"]]
-
-def cant_Vh(cont_Totales, list_precios_buena):
-	max_Peso_Vh = list_precios_buena[0]
-	nom_Vh = list_precios_buena[1]
-	cant_Vh = list_precios_buena[2]
-	if cont_Totales >= max_Peso_Vh[0]:
-		cant_Vh[0] += cont_Totales // max_Peso_Vh[0] ; resto_1 = cont_Totales % max_Peso_Vh[0]
-		if resto_1 >= max_Peso_Vh[1]:
-			cant_Vh[1] += resto_1 // max_Peso_Vh[1] ; resto_2 = resto_1 % max_Peso_Vh[1]
-			if resto_2 >= max_Peso_Vh[2]:
-				cant_Vh[2] += resto_2 // max_Peso_Vh[2] ; resto_3 = resto_2 % max_Peso_Vh[2]
-				if resto_3 >= max_Peso_Vh[3]:
-					cant_Vh[3] += resto_3 // max_Peso_Vh[3] ; resto_4 = resto_3 % max_Peso_Vh[3]
-					if resto_4 > 0:
-						cant_Vh[3] += 1
-				else:
-					cant_Vh[3] += 1
-			else:
-				cant_Vh[2] += 1
-		else:
-			cant_Vh[1] += 1
-	elif cont_Totales >= max_Peso_Vh[1]:
-		cant_Vh[1] += cont_Totales// max_Peso_Vh[1] ; resto_1 = cont_Totales % max_Peso_Vh[1]
-		if resto_1 >= max_Peso_Vh[2]:
-			cant_Vh[2] = resto_1 // max_Peso_Vh[2] ; resto_2 = resto_1 % max_Peso_Vh[2]
-			if resto_2 >= max_Peso_Vh[3]:
-				cant_Vh[3] += resto_2 // max_Peso_Vh[3] ;resto_3 = resto_2 % max_Peso_Vh[3]
-				if resto_3 > 0:
-					cant_Vh[3] += 1
-			else:
-				cant_Vh[3] += 1
-		else:
-			cant_Vh[2] += 1
-	elif cont_Totales >= max_Peso_Vh[2]:
-		cant_Vh[2] += cont_Totales // max_Peso_Vh[2] ; resto_1 = cont_Totales % max_Peso_Vh[2]
-		if resto_1 >= max_Peso_Vh[3]:
-			cant_Vh[3] += resto_1 // max_Peso_Vh[3] ; resto_2 = resto_1 % max_Peso_Vh[3]
-			if resto_2 > 0:
-				cant_Vh[3] += 1
-		else:
-			cant_Vh[3] += 1
-	elif cont_Totales >= max_Peso_Vh[3]:
-		cant_Vh[3] += cont_Totales // max_Peso_Vh[3] ; resto_1 = cont_Totales % max_Peso_Vh[3]
-		if resto_1 > 0:
-			cant_Vh[3] += 1
+def cant_Vh(cont_Totales, Pbarco, Ptren, Pavion, Pcamion):
+	print(cont_Totales)
+	PrecioPorDep1 = Pbarco / 24000
+	PrecioPorDep2 = Ptren  / 250
+	PrecioPorDep3 = Pavion / 10
+	PrecioPorDep4 = Pcamion
+	NBarco = 0; NTren = 0 ; NAvion = 0 ; NCamion = 0
+	lis = ["camion"]
+	if Pbarco < Ptren and Pbarco < Pavion and Pbarco < Pcamion:
+		resto, NBarco = VhRentable(cont_Totales, 24000, NBarco)
+	elif Ptren < Pavion and Ptren < Pcamion:
+		resto, NTren = VhRentable(cont_Totales, 250, NTren)
+	elif Pavion < Pcamion:
+		resto, NAvion = VhRentable(cont_Totales, 10, NAvion)
+	elif Pcamion < PrecioPorDep1 and Pcamion < PrecioPorDep2 and Pcamion < PrecioPorDep3 and Pcamion < PrecioPorDep4:
+		resto, NCamion = VhRentable(cont_Totales, 1, NCamion)
 	else:
-		cant_Vh[3] += 1
-	print(cant_Vh)
-	print(nom_Vh)
-	return [max_Peso_Vh, nom_Vh, cant_Vh]
+		if PrecioPorDep1 < PrecioPorDep2:
+				lis.append("barco")
+		if PrecioPorDep2 < PrecioPorDep3:
+				lis.append("tren")
+		if PrecioPorDep3 < PrecioPorDep4:
+				lis.append("avion")
+		resto, NBarco  = VhRentable2(cont_Totales, 24000, "barco", lis, NBarco)
+		resto, NTren   = VhRentable2(resto, 250, "tren", lis, NTren)
+		resto, NAvion  = VhRentable2(resto, 10, "avion", lis, NAvion)
+		resto, NCamion = VhRentable2(resto, 1, "camion", lis, NCamion)
+		resto, NCamion = VhRentable2(resto, 1, "camion", lis, NCamion)
+	print(NBarco, "numero de barcos")
+	print(NTren, "numero de trenes")
+	print(NAvion, "numero de aviones")
+	print(NCamion, "numero de camiones")
+	matriz = [[NBarco, Pbarco], [NTren, Ptren], [NAvion, Pavion], [NCamion, Pcamion]]
+	return matriz
 
-# Crea las instancias de vehiculos y los agrega a la lista_Vh,
-# tambien para cada instancia agrega los contenedores correspondientes
-# a cada vehiculo en especifico.
+def VhRentable(num_Conts, peso_Dep, NumVhs):
+	resto = num_Conts
+	if resto >= peso_Dep:
+		NumVhs += resto // peso_Dep
+		resto = resto % peso_Dep
+	elif resto > (peso_Dep // 2):
+		NumVhs += 1
+	return resto, NumVhs
 
-def Dep_en_Vh(cant_Vhs, lista_All_Dep, lista_Vh):
-	cant_Total_Vh = [250, 10, 1]
-	nom = ["trenes", "aviones", "camiones"]
-	for r in range(len(cant_Vhs)):
-		var = 0
-		for k in range(int(cant_Vhs[r][0])):
-			obj = Vehiculo()
-			obj.list_Depositos = []
-			obj.assign_atr(cant_Total_Vh[r])
-			for x in range(var, len(lista_All_Dep)):
-				if x == (cant_Total_Vh[r] + var):
-					var += cant_Total_Vh[r]
-					break
-				obj.list_Depositos.append(lista_All_Dep[x])
-			lista_Vh[r].append(obj)
+def VhRentable2(num_Conts, peso_Dep, string, lis, NumVhs):
+	resto = num_Conts
+	if resto >= peso_Dep and string in lis:
+		NumVhs += resto // peso_Dep
+		resto = resto % peso_Dep
+	elif resto > (peso_Dep // 2) and string in lis:
+		NumVhs += 1
+	return resto, NumVhs
+
+def Dep_en_Vh(NumVhs, peso_Dep, index,  matriz, lista_All_Dep, lista_Vh):
+	var = 0
+	for x in range(int(NumVhs)):
+		obj = Vehiculo()
+		obj.assign_atr(peso_Dep, matriz[index][1])
+		for y in range(var, len(lista_All_Dep)):
+			if y == (peso_Dep + var):
+				var += peso_Dep
+				break
+			obj.list_Depositos.append(lista_All_Dep[y])
+		lista_Vh[index].append(obj)
 	return lista_Vh
-
-def run_program(lista_Cont, lista_Vh):
-	insert_to_db(read_csv("MOCK_DATA.csv"))
-	lista_Contenedores(get_list_to_db(), lista_Cont)
-	num_Total_Depositos, lista_All_Dep = cont_Totales(lista_Cont)
-	num_Vh = cant_Vh(num_Total_Depositos)
-	Dep_en_Vh(num_Vh, lista_All_Dep, lista_Vh)
