@@ -82,11 +82,9 @@ class Vehiculo:
 #========================================================================#
 
 	def punto_3_1(self, main):
-		print(len(self.list_Depositos))
 		l_obj_dict = []
 		for x in range(len(self.list_Depositos)):
 			l_obj_dict.append(self.list_Depositos[x].__dict__)
-		print(len(l_obj_dict))
 		scroll = Scrollbar(main)
 		text = Text(main, height= 15, width= 60,bg="grey")
 		scroll.pack(side= LEFT, fill= Y)

@@ -24,7 +24,7 @@ def read_csv(x):
 def llenar_lista_Contenedores(lista, lista_Cont, index, tipo_Cont, masax, pesom):
 	peso_Max = pesom
 	for id, nom, tipo_C, masa, pesO	in lista:
-		peso = int(pesO)
+		peso = pesO
 		num_Dep = cant_Cont(peso, peso_Max)
 		if tipo_C == tipo_Cont and masa == masax:
 			for x in range(num_Dep[0]):
@@ -51,7 +51,7 @@ def cant_Cont(pesox, pesomax):
 	if pesox >= pesomax:
 		cont_G_llenos += pesox//pesomax
 		resto = pesox % pesomax
-		if resto > (pesomax/2):
+		if resto >= (pesomax/2):
 			cont_G += 1
 			lista_G = [cont_G, resto]
 			return [cont_G_llenos, lista_G]
@@ -59,7 +59,7 @@ def cant_Cont(pesox, pesomax):
 			cont_P += 1
 			lista_P = [cont_P, resto]
 			return [cont_G_llenos, lista_P, "pequeño"]
-	elif pesox > (pesomax/2) :
+	elif pesox >= (pesomax/2) :
 		cont_G += 1
 		lista_G = [cont_G, pesox]
 		return [cont_G_llenos, lista_G]
@@ -148,4 +148,3 @@ def Dep_en_Vh(NumVhs, peso_Dep, index,  matriz, lista_All_Dep, lista_Vh):
 				break
 			obj.list_Depositos.append(lista_All_Dep[y])
 		lista_Vh[index].append(obj)
-	print(len(lista_Vh[1]))

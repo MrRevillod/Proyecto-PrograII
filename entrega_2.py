@@ -52,7 +52,6 @@ def Clear_Main_Cont(main):
 
 
 def Create_SideBar(root, main, Vehiculos_Txt, lista_Vh, cant_Vhs):
-	print(len(lista_Vh[1]))
 	sidebar = Frame(root, bg="grey", padx=10, pady=10)
 	sidebar.grid(row=0, column=0, sticky="nsew")
 
@@ -245,7 +244,6 @@ def Enunciado_IV_I(main, lista_Vh, cant_Vhs):
 	precio_total = 0
 	for x in range(len(lista_Vh)):
 		precio_total += (len(lista_Vh[x]) * cant_Vhs[x][1])
-	print(precio_total)
 
 	Label_IV = Label(main, text=f"El costo total corresponde a {precio_total}", font=("Arial", 13), bg="grey")
 	Label_IV.grid(row=0, column=1, columnspan=2, sticky="nsew")
@@ -266,10 +264,12 @@ def Enunciado_IV_II(main, lista_Vh, cant_Vhs, Vehiculos_Txt):
 
 # __Ejecucion_Principal________________________________________
 
+Pbarco = 1000000000 ; Ptren = 10000000 ; Pavion = 1000000 ; Pcamion = 500000
 
 if __name__ == "__main__":
 
-	lista = read_csv("MOCK_DATA.csv")
+	insert_to_db(read_csv("MOCK_DATA_Eval_4.csv"))
+	lista = get_list_to_db()
 	run_Lis_Cont(lista, lis_Cont_N, lis_Cont_R, lis_Cont_I)
 	cantidad_Total, lista_All_Dep = run_Cont_Total(lis_Cont_N, lis_Cont_R, lis_Cont_I)
 	cant_Vhs = cant_Vh(cantidad_Total, Pbarco, Ptren, Pavion, Pcamion)
