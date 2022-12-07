@@ -245,6 +245,8 @@ def Enunciado_IV_I(main, lista_Vh, cant_Vhs):
 	for x in range(len(lista_Vh)):
 		precio_total += (len(lista_Vh[x]) * cant_Vhs[x][1])
 
+	print(f"El precio total de el transporte de todos los contenedores es: {precio_total}")
+
 	Label_IV = Label(main, text=f"El costo total corresponde a {precio_total}", font=("Arial", 13), bg="grey")
 	Label_IV.grid(row=0, column=1, columnspan=2, sticky="nsew")
 
@@ -270,6 +272,7 @@ if __name__ == "__main__":
 
 	insert_to_db(read_csv("MOCK_DATA_Eval_4.csv"))
 	lista = get_list_to_db()
+	# lista = read_csv("MOCK_DATA_Eval_4.csv")
 	run_Lis_Cont(lista, lis_Cont_N, lis_Cont_R, lis_Cont_I)
 	cantidad_Total, lista_All_Dep = run_Cont_Total(lis_Cont_N, lis_Cont_R, lis_Cont_I)
 	cant_Vhs = cant_Vh(cantidad_Total, Pbarco, Ptren, Pavion, Pcamion)
