@@ -9,4 +9,4 @@
 
 #### Nicolás Ketterer
 
-![Screenshot]()
+![Screenshot](https://github.com/MrRevillod/Optimizacion-POO/blob/main/img/previewimg.png)
